@@ -1,1 +1,2230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KIROS Intelligence Group - Strategic Intelligence Platform</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        :root {
+            --primary-dark: #1E3A8A;
+            --primary: #2563EB;
+            --primary-light: #3B82F6;
+            --accent-gold: #D4AF37;
+            --accent-gold-light: #F59E0B;
+            --text-dark: #0F172A;
+            --text-gray: #475569;
+            --text-light: #64748B;
+            --bg-light: #F8FAFC;
+            --bg-section: #F1F5F9;
+            --white: #FFFFFF;
+            --gradient-primary: linear-gradient(135deg, #1E3A8A 0%, #2563EB 50%, #3B82F6 100%);
+            --gradient-gold: linear-gradient(135deg, #D4AF37 0%, #F59E0B 100%);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+            background: var(--white);
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-mark {
+            width: 45px;
+            height: 45px;
+            background: var(--gradient-primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .logo-mark::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            width: 8px;
+            height: 8px;
+            background: var(--accent-gold);
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+        }
+
+        .logo:hover .logo-mark {
+            transform: rotate(-5deg) scale(1.05);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            letter-spacing: 1px;
+            line-height: 1;
+        }
+
+        .logo-tagline {
+            font-size: 0.65rem;
+            color: var(--text-gray);
+            letter-spacing: 2px;
+            font-weight: 500;
+            margin-top: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-cta {
+            background: var(--gradient-primary);
+            color: white !important;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .nav-cta:hover::after {
+            width: 0 !important;
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 77px;
+            padding: 6rem 2rem;
+            position: relative;
+            overflow: hidden;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            background: #000;
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .hero-background img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.4;
+        }
+
+        .hero-gradient {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, 
+                rgba(30, 58, 138, 0.8) 0%, 
+                rgba(37, 99, 235, 0.6) 50%, 
+                rgba(59, 130, 246, 0.4) 100%);
+            z-index: 2;
+        }
+
+        .hero-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            z-index: 3;
+            min-height: calc(90vh - 12rem);
+        }
+
+        .hero-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .hero-content h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: white;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--accent-gold);
+            margin-bottom: 2rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        .hero-description {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 3rem;
+            line-height: 1.8;
+            animation: fadeInUp 0.8s ease 0.4s both;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 4rem;
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.8s ease 0.6s both;
+            justify-content: center;
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--accent-gold);
+            display: block;
+        }
+
+        .hero-stat-label {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hero-glb-note {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-style: italic;
+            margin-top: -1rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease 0.5s both;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease 0.8s both;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: left 0.3s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(37, 99, 235, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Value Proposition Section */
+        .value-prop {
+            padding: 6rem 2rem;
+            background: var(--white);
+            position: relative;
+        }
+
+        .value-prop::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+        }
+
+        .value-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .value-header {
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto 4rem;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+            line-height: 1.2;
+        }
+
+        .section-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-gray);
+            line-height: 1.8;
+        }
+
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .value-card {
+            background: var(--bg-light);
+            padding: 2.5rem;
+            border-radius: 16px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .value-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-gold);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .value-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-xl);
+            background: var(--white);
+        }
+
+        .value-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .value-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: var(--gradient-primary);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .value-icon svg {
+            width: 40px;
+            height: 40px;
+            fill: white;
+        }
+
+        .value-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .value-card p {
+            color: var(--text-gray);
+            line-height: 1.6;
+        }
+
+        /* Divisions Section */
+        .divisions {
+            padding: 6rem 2rem;
+            background: linear-gradient(180deg, var(--bg-light) 0%, var(--white) 100%);
+        }
+
+        .divisions-header {
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto 4rem;
+        }
+
+        .divisions-visual {
+            max-width: 1400px;
+            margin: 0 auto 4rem;
+            padding: 0;
+            background: transparent;
+            border-radius: 0;
+            box-shadow: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .synergy-showcase {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 24px;
+            padding: 4rem 2rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        }
+
+        .synergy-showcase::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 20%, rgba(37, 99, 235, 0.05) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(212, 175, 55, 0.05) 0%, transparent 50%);
+        }
+
+        .synergy-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .synergy-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 3rem;
+        }
+
+        .synergy-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .synergy-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+            transition: all 0.4s ease;
+            position: relative;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .synergy-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .synergy-image {
+            height: 140px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .synergy-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, 
+                rgba(37, 99, 235, 0.8) 0%, 
+                rgba(30, 58, 138, 0.6) 100%);
+        }
+
+        .synergy-content-box {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .synergy-card h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+
+        .synergy-card p {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            line-height: 1.5;
+        }
+
+        .synergy-connections {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .connection-line {
+            height: 2px;
+            flex: 1;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                var(--accent-gold) 20%, 
+                var(--primary) 50%, 
+                var(--accent-gold) 80%, 
+                transparent 100%);
+            opacity: 0.6;
+        }
+
+        .connection-dot {
+            width: 12px;
+            height: 12px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+        }
+
+        .synergy-flow {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 2rem;
+            background: rgba(255,255,255,0.7);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+        }
+
+        .flow-text {
+            font-size: 1.1rem;
+            color: var(--text-gray);
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+
+        .flow-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 1.5rem;
+        }
+
+        .flow-stat {
+            text-align: center;
+        }
+
+        .flow-stat-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: block;
+        }
+
+        .flow-stat-label {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .divisions-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2.5rem;
+        }
+
+        .division-card {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .division-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .division-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .division-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .division-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .division-icon {
+            width: 70px;
+            height: 70px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .division-icon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(30, 58, 138, 0.2) 100%);
+        }
+
+        .division-card h3 {
+            font-size: 1.75rem;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .division-tagline {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .division-description {
+            color: var(--text-gray);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            font-size: 1.05rem;
+        }
+
+        .division-features {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .division-features li {
+            padding-left: 1.5rem;
+            position: relative;
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .division-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent-gold);
+            font-weight: bold;
+        }
+
+        /* Portfolio Section */
+        .portfolio {
+            padding: 6rem 2rem;
+            background: var(--text-dark);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .portfolio::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
+        }
+
+        .portfolio-header {
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto 4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .portfolio-header .section-title {
+            color: white;
+        }
+
+        .portfolio-header .section-subtitle {
+            color: #94A3B8;
+        }
+
+        .portfolio-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto 4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .portfolio-stat {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .portfolio-stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent-gold);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .portfolio-stat-label {
+            font-size: 0.875rem;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .portfolio-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .portfolio-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 16px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .portfolio-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .portfolio-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--accent-gold);
+        }
+
+        .portfolio-card:hover::before {
+            opacity: 1;
+        }
+
+        .company-logo {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-gold);
+            border-radius: 16px;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .portfolio-card h4 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: white;
+            text-align: center;
+        }
+
+        .portfolio-stage {
+            color: var(--accent-gold);
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .portfolio-description {
+            color: #CBD5E1;
+            font-size: 0.875rem;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .portfolio-investment {
+            display: block;
+            text-align: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-weight: 700;
+            color: var(--accent-gold);
+            font-size: 1.1rem;
+        }
+
+        /* Leadership Section */
+        .leadership {
+            padding: 6rem 2rem;
+            background: var(--white);
+        }
+
+        .leadership-header {
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto 4rem;
+        }
+
+        .leadership-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2.5rem;
+        }
+
+        .leader-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 2rem;
+            background: var(--bg-light);
+            padding: 2.5rem;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .leader-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-gold);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .leader-card:hover {
+            transform: translateX(10px);
+            box-shadow: var(--shadow-lg);
+            background: white;
+        }
+
+        .leader-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .leader-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid white;
+            background-size: cover;
+            background-position: center;
+            box-shadow: var(--shadow);
+            filter: contrast(1.1) brightness(1.05);
+        }
+
+        .leader-avatar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.1) 50%, transparent 60%),
+                radial-gradient(circle at 30% 30%, rgba(255,255,255,0.2) 0%, transparent 40%);
+            mix-blend-mode: overlay;
+        }
+
+        /* Individual leader portrait styles */
+        .clarence-avatar {
+            background-image: url('https://github.com/clarence1212/safeguardai-website/blob/main/clarence-st.png?raw=true');
+        }
+
+        .sarah-avatar {
+            background-image: url('https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&h=200&fit=crop&crop=face');
+        }
+
+        .nikola-avatar {
+            background-image: url('https://github.com/clarence1212/safeguardai-website/blob/main/nik.png?raw=true');
+        }
+
+        .michael-avatar {
+            background-image: url('https://images.unsplash.com/photo-1556157382-97eda2d62296?w=200&h=200&fit=crop&crop=face');
+        }
+
+        .priya-avatar {
+            background-image: url('https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=200&h=200&fit=crop&crop=face');
+        }
+
+        .victoria-avatar {
+            background-image: url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&h=200&fit=crop&crop=face');
+        }
+
+        .james-avatar {
+            background-image: url('https://images.unsplash.com/photo-1560250097-0b93528c311a?w=200&h=200&fit=crop&crop=face');
+        }
+
+        .david-avatar {
+            background-image: url('https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&h=200&fit=crop&crop=face');
+        }
+
+        .leader-content h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.3rem;
+            color: var(--text-dark);
+        }
+
+        .leader-title {
+            color: var(--primary);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .leader-bio {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        /* Research Section */
+        .research {
+            padding: 6rem 2rem;
+            background: var(--bg-light);
+        }
+
+        .research-header {
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto 4rem;
+        }
+
+        .research-categories {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+        }
+
+        .research-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .research-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .research-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-start;
+        }
+
+        .research-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.7) 100%);
+        }
+
+        .research-image-credit {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+        }
+
+        .research-content {
+            padding: 2rem;
+        }
+
+        .research-category {
+            color: var(--primary);
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .research-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .research-content p {
+            color: var(--text-gray);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .research-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: gap 0.3s ease;
+        }
+
+        .research-link:hover {
+            gap: 1rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 5rem 2rem;
+            background: var(--gradient-primary);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+        }
+
+        .cta-content {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-content h2 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+        }
+
+        .cta-content p {
+            font-size: 1.3rem;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-white {
+            background: white;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .btn-white:hover {
+            background: var(--bg-light);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-outline-white {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-outline-white:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text-dark);
+            color: white;
+            padding: 4rem 2rem 2rem;
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .footer-logo .logo-mark {
+            background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.1) 100%);
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .footer-logo .logo-name {
+            color: white;
+        }
+
+        .footer-logo .logo-tagline {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .footer-brand p {
+            opacity: 0.8;
+            line-height: 1.8;
+        }
+
+        .footer-quote {
+            font-style: italic;
+            opacity: 0.7;
+            padding: 1rem;
+            border-left: 3px solid var(--accent-gold);
+        }
+
+        .footer-column h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-gold);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-column a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .footer-column a:hover {
+            opacity: 1;
+            padding-left: 10px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0.6;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+            
+            .portfolio-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .value-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .divisions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .leadership-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .research-categories {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .portfolio-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .value-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .synergy-diagram {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="logo">
+                <div class="logo-container">
+                    <div class="logo-mark">K</div>
+                    <div class="logo-text">
+                        <div class="logo-name">KIROS</div>
+                        <div class="logo-tagline">INTELLIGENCE GROUP</div>
+                    </div>
+                </div>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#divisions">Divisions</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#research">Research</a></li>
+                <li><a href="#leadership">Leadership</a></li>
+                <li><a href="#contact" class="nav-cta">Get Started</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-background">
+            <img src="https://images.unsplash.com/photo-1525625293386-3f8f99389edd?w=1920&h=1080&fit=crop" 
+                 alt="Singapore Skyline">
+        </div>
+        <div class="hero-gradient"></div>
+        
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>Shaping the Future of Enterprise Intelligence</h1>
+                <p class="hero-subtitle">Where Timing Meets Intelligence</p>
+                <p class="hero-description">
+                    KIROS Intelligence Group operates four specialized divisions delivering strategic 
+                    AI consulting, breakthrough innovation, active venture building, and growth 
+                    capital investment across Asia-Pacific markets.
+                </p>
+                <p class="hero-glb-note">A GLB Group APAC Strategic Initiative</p>
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <span class="hero-stat-number">$130M+</span>
+                        <span class="hero-stat-label">Portfolio Value</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="hero-stat-number">21+</span>
+                        <span class="hero-stat-label">Years Experience</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="hero-stat-number">8</span>
+                        <span class="hero-stat-label">Companies</span>
+                    </div>
+                </div>
+                <div class="hero-cta">
+                    <a href="#contact" class="btn btn-primary">Schedule Strategic Consultation →</a>
+                    <a href="#portfolio" class="btn btn-secondary">Explore Portfolio</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Value Proposition -->
+    <section class="value-prop" id="about">
+        <div class="value-container">
+            <div class="value-header">
+                <h2 class="section-title">The Only Platform That Spans the Entire AI Innovation Lifecycle</h2>
+                <p class="section-subtitle">
+                    From strategic advisory through breakthrough research, active company building, 
+                    and growth capital investment—we don't just advise on the future, we build it.
+                </p>
+                <p style="font-style: italic; color: var(--primary); margin-top: 1rem; font-size: 1.1rem;">
+                    Where Timing Meets Intelligence
+                </p>
+            </div>
+            <div class="value-grid">
+                <div class="value-card">
+                    <div class="value-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5z"/>
+                        </svg>
+                    </div>
+                    <h3>End-to-End Ecosystem</h3>
+                    <p>Seamless integration from strategy through research, building, and scaling</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M13 2.05v3.03c3.39.49 6 3.39 6 6.92 0 .9-.18 1.75-.48 2.54l2.6 1.53c.56-1.24.88-2.62.88-4.07 0-5.18-3.95-9.45-9-9.95zM12 19c-3.87 0-7-3.13-7-7 0-3.53 2.61-6.43 6-6.92V2.05c-5.06.5-9 4.76-9 9.95 0 5.52 4.47 10 9.99 10 3.31 0 6.24-1.61 8.06-4.09l-2.6-1.53C16.17 17.98 14.21 19 12 19z"/>
+                        </svg>
+                    </div>
+                    <h3>Accelerated Innovation</h3>
+                    <p>Ideas move faster from concept to market through our integrated platform</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                    </div>
+                    <h3>Scientific Excellence</h3>
+                    <p>PhD-level expertise meets world-class business execution</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/>
+                        </svg>
+                    </div>
+                    <h3>Proven Performance</h3>
+                    <p>$130M+ portfolio value with 45%+ IRR across 8 companies</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Divisions Section -->
+    <section class="divisions" id="divisions">
+        <div class="divisions-header">
+            <h2 class="section-title">Four Specialized Divisions, One Unified Vision</h2>
+            <p class="section-subtitle">
+                KIROS Intelligence Group uniquely combines the strategic rigor of tier-one consulting, 
+                the innovation power of advanced research labs, the execution excellence of venture studios, 
+                and the investment expertise of growth capital funds.
+            </p>
+        </div>
+
+        <div class="divisions-visual">
+            <div class="synergy-showcase">
+                <div class="synergy-content">
+                    <h3 class="synergy-title">Integrated Strategic Intelligence Platform</h3>
+                    
+                    <div class="synergy-grid">
+                        <div class="synergy-card">
+                            <div class="synergy-image" style="background-image: url('https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&h=200&fit=crop');">
+                            </div>
+                            <div class="synergy-content-box">
+                                <h4>Strategic Consulting</h4>
+                                <p>C-suite advisory & AI transformation strategy</p>
+                            </div>
+                        </div>
+                        
+                        <div class="synergy-card">
+                            <div class="synergy-image" style="background-image: url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=200&fit=crop');">
+                            </div>
+                            <div class="synergy-content-box">
+                                <h4>Innovation Labs</h4>
+                                <p>Breakthrough R&D & technology development</p>
+                            </div>
+                        </div>
+                        
+                        <div class="synergy-card">
+                            <div class="synergy-image" style="background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&h=200&fit=crop');">
+                            </div>
+                            <div class="synergy-content-box">
+                                <h4>Venture Studio</h4>
+                                <p>Active company building & co-founding</p>
+                            </div>
+                        </div>
+                        
+                        <div class="synergy-card">
+                            <div class="synergy-image" style="background-image: url('https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=400&h=200&fit=crop');">
+                            </div>
+                            <div class="synergy-content-box">
+                                <h4>Capital Partners</h4>
+                                <p>Growth investment & portfolio management</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="synergy-connections">
+                        <div class="connection-line"></div>
+                        <div class="connection-dot"></div>
+                        <div class="connection-line"></div>
+                        <div class="connection-dot"></div>
+                        <div class="connection-line"></div>
+                        <div class="connection-dot"></div>
+                        <div class="connection-line"></div>
+                    </div>
+                    
+                    <div class="synergy-flow">
+                        <p class="flow-text">
+                            "Ideas flow seamlessly from strategic insight through breakthrough research, 
+                            active company building, to scaled market success."
+                        </p>
+                        
+                        <div class="flow-stats">
+                            <div class="flow-stat">
+                                <span class="flow-stat-number">24</span>
+                                <span class="flow-stat-label">Months</span>
+                            </div>
+                            <div class="flow-stat">
+                                <span class="flow-stat-number">4x</span>
+                                <span class="flow-stat-label">Faster</span>
+                            </div>
+                            <div class="flow-stat">
+                                <span class="flow-stat-number">85%</span>
+                                <span class="flow-stat-label">Success Rate</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="divisions-grid">
+            <div class="division-card">
+                <div class="division-header">
+                    <div class="division-icon" style="background-image: url('https://images.unsplash.com/photo-1552664730-d307ca884978?w=70&h=70&fit=crop');">
+                    </div>
+                    <div>
+                        <h3>Kiros Strategic Consulting</h3>
+                        <p class="division-tagline" style="color: #D4AF37;">Redefining Strategic AI Consulting</p>
+                    </div>
+                </div>
+                <p class="division-description">
+                    World-class AI strategy consulting for enterprise transformation. We deliver the analytical 
+                    depth of tier-one consulting firms, the implementation excellence of leading strategy consultancies, 
+                    and the technical precision that only comes from actually building AI companies.
+                </p>
+                <ul class="division-features">
+                    <li>Kiros Strategic AI Framework™</li>
+                    <li>C-Suite Advisory Services</li>
+                    <li>Industry-specific solutions</li>
+                    <li>18+ years executive experience</li>
+                    <li>CIO 100 APAC recognition</li>
+                    <li>Fortune 500 clients</li>
+                </ul>
+            </div>
+
+            <div class="division-card">
+                <div class="division-header">
+                    <div class="division-icon" style="background-image: url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=70&h=70&fit=crop');">
+                    </div>
+                    <div>
+                        <h3>Kiros Innovation Labs</h3>
+                        <p class="division-tagline" style="color: #D4AF37;">Pioneering Tomorrow's AI Technologies</p>
+                    </div>
+                </div>
+                <p class="division-description">
+                    Advanced R&D and breakthrough technology development. Pioneering brain-inspired architectures, 
+                    agentic intelligence, and human-AI collaboration systems that bridge cutting-edge research 
+                    with commercial applications.
+                </p>
+                <ul class="division-features">
+                    <li>Agentic Intelligence Research</li>
+                    <li>Neuro-Symbolic Computing</li>
+                    <li>Leading university partnerships</li>
+                    <li>Patent portfolio development</li>
+                    <li>Major tech company collaboration</li>
+                    <li>4+ peer-reviewed publications</li>
+                </ul>
+            </div>
+
+            <div class="division-card">
+                <div class="division-header">
+                    <div class="division-icon" style="background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=70&h=70&fit=crop');">
+                    </div>
+                    <div>
+                        <h3>Kiros Venture Studio</h3>
+                        <p class="division-tagline" style="color: #D4AF37;">Active Company Creation</p>
+                    </div>
+                </div>
+                <p class="division-description">
+                    Active company building with hands-on operational support. We take co-founder roles in 
+                    breakthrough AI companies from ideation through Series A, providing shared resources 
+                    and proven methodologies.
+                </p>
+                <ul class="division-features">
+                    <li>$500K-$3M initial investment</li>
+                    <li>Shared service platform</li>
+                    <li>5 active ventures</li>
+                    <li>Co-founder involvement</li>
+                    <li>Lean startup methodology</li>
+                    <li>24-month runway</li>
+                </ul>
+            </div>
+
+            <div class="division-card">
+                <div class="division-header">
+                    <div class="division-icon" style="background-image: url('https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=70&h=70&fit=crop');">
+                    </div>
+                    <div>
+                        <h3>Kiros Capital Partners</h3>
+                        <p class="division-tagline" style="color: #D4AF37;">Growth Capital Excellence</p>
+                    </div>
+                </div>
+                <p class="division-description">
+                    Growth-stage investments and portfolio management. Scaling proven AI companies with capital, 
+                    strategic guidance, and operational support to become market-leading enterprises.
+                </p>
+                <ul class="division-features">
+                    <li>$1M-$15M investment range</li>
+                    <li>Series A through growth</li>
+                    <li>45%+ portfolio IRR</li>
+                    <li>5 active board seats</li>
+                    <li>Strategic advisory</li>
+                    <li>Exit strategy support</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section class="portfolio" id="portfolio">
+        <div class="portfolio-header">
+            <h2 class="section-title">Portfolio Companies & Strategic Investments</h2>
+            <p class="section-subtitle">
+                Building and scaling breakthrough AI companies across digital wellness, 
+                enterprise intelligence, education technology, and sustainable innovation.
+            </p>
+        </div>
+
+        <div class="portfolio-stats">
+            <div class="portfolio-stat">
+                <span class="portfolio-stat-number">$130M+</span>
+                <span class="portfolio-stat-label">Total Valuation</span>
+            </div>
+            <div class="portfolio-stat">
+                <span class="portfolio-stat-number">8</span>
+                <span class="portfolio-stat-label">Portfolio Companies</span>
+            </div>
+            <div class="portfolio-stat">
+                <span class="portfolio-stat-number">45%+</span>
+                <span class="portfolio-stat-label">Portfolio IRR</span>
+            </div>
+            <div class="portfolio-stat">
+                <span class="portfolio-stat-number">$250M+</span>
+                <span class="portfolio-stat-label">2027 Target</span>
+            </div>
+        </div>
+
+        <div class="portfolio-grid">
+            <div class="portfolio-card">
+                <div class="company-logo">AG</div>
+                <h4>Agentrify.AI</h4>
+                <p class="portfolio-stage">Stealth Mode • Series A</p>
+                <p class="portfolio-description">
+                    Architects of the Agentic Economy. Autonomous systems redefining enterprise productivity.
+                </p>
+                <span class="portfolio-investment">$4.5M</span>
+            </div>
+
+            <div class="portfolio-card">
+                <div class="company-logo">SG</div>
+                <h4>SafeGuardAI</h4>
+                <p class="portfolio-stage">Series A • 2024</p>
+                <p class="portfolio-description">
+                    AI-driven child & adolescent digital wellness platform with privacy-preserving systems.
+                </p>
+                <span class="portfolio-investment">$3.2M</span>
+            </div>
+
+            <div class="portfolio-card">
+                <div class="company-logo">HB</div>
+                <h4>HyperbrainQ</h4>
+                <p class="portfolio-stage">Series A • 2020</p>
+                <p class="portfolio-description">
+                    Agentic AI platforms for enterprise intelligence with brain-inspired architectures.
+                </p>
+                <span class="portfolio-investment">$2.5M</span>
+            </div>
+
+            <div class="portfolio-card">
+                <div class="company-logo">EL</div>
+                <h4>EvoLearn AI</h4>
+                <p class="portfolio-stage">Pre-Series A • 2024</p>
+                <p class="portfolio-description">
+                    Conversational AI for early childhood education with adaptive curriculum.
+                </p>
+                <span class="portfolio-investment">$2.1M</span>
+            </div>
+
+            <div class="portfolio-card">
+                <div class="company-logo">ZA</div>
+                <h4>ZAC AI Lab</h4>
+                <p class="portfolio-stage">Seed • 2024</p>
+                <p class="portfolio-description">
+                    Generative AI & edge intelligence solutions for multi-industry applications.
+                </p>
+                <span class="portfolio-investment">$1.8M</span>
+            </div>
+
+            <div class="portfolio-card">
+                <div class="company-logo">CP</div>
+                <h4>CarePal</h4>
+                <p class="portfolio-stage">Seed • 2024</p>
+                <p class="portfolio-description">
+                    AI-powered senior care & companionship platform with virtual caregiver services.
+                </p>
+                <span class="portfolio-investment">$1.5M</span>
+            </div>
+
+            <div class="portfolio-card">
+                <div class="company-logo">EA</div>
+                <h4>Ecological Automation</h4>
+                <p class="portfolio-stage">Revenue • 2023</p>
+                <p class="portfolio-description">
+                    AI-driven smart energy & sustainability solutions with virtual power plant tech.
+                </p>
+                <span class="portfolio-investment">$1.2M</span>
+            </div>
+
+            <div class="portfolio-card">
+                <div class="company-logo">KE</div>
+                <h4>Knowledge Engineering</h4>
+                <p class="portfolio-stage">Revenue • 2022</p>
+                <p class="portfolio-description">
+                    Advanced knowledge systems & neuro-symbolic AI consulting services.
+                </p>
+                <span class="portfolio-investment">$800K</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Leadership Section -->
+    <section class="leadership" id="leadership">
+        <div class="leadership-header">
+            <h2 class="section-title">World-Class Leadership Team</h2>
+            <p class="section-subtitle">
+                Our leadership team combines world-class AI research credentials with proven 
+                C-suite strategic leadership and successful venture building experience.
+            </p>
+        </div>
+
+        <div class="leadership-grid">
+            <div class="leader-card">
+                <div class="leader-avatar clarence-avatar"></div>
+                <div class="leader-content">
+                    <h4>Dr. Clarence Tan, PhD</h4>
+                    <p class="leader-title">Managing Partner & Chief Executive Officer</p>
+                    <p class="leader-bio">
+                        Elite combination of scientific excellence and strategic leadership. PhD in AI and 
+                        Neuromorphic Computing, MBA in International Finance. 18+ years of senior executive 
+                        roles with CIO 100 Asia Pacific recognition. Founded KIROS Intelligence Group in 2004, 
+                        co-founded multiple AI ventures, and serves as board member across 8 portfolio companies.
+                    </p>
+                </div>
+            </div>
+
+            <div class="leader-card">
+                <div class="leader-avatar sarah-avatar"></div>
+                <div class="leader-content">
+                    <h4>Sarah Chen, CPA, MBA</h4>
+                    <p class="leader-title">Partner, Strategy & Operations</p>
+                    <p class="leader-bio">
+                        Former senior partner at leading global consulting firms with extensive experience in 
+                        enterprise transformation and financial strategy across Asia-Pacific markets. Leads 
+                        strategic consulting operations and serves as investment partner for Capital Partners division.
+                    </p>
+                </div>
+            </div>
+
+            <div class="leader-card">
+                <div class="leader-avatar nikola-avatar"></div>
+                <div class="leader-content">
+                    <h4>Prof. Nikola Kasabov</h4>
+                    <p class="leader-title">Scientific Advisor & Research Director</p>
+                    <p class="leader-bio">
+                        World-renowned expert in brain-inspired computing and neuromorphic AI. Director of KEDRI lab 
+                        at Auckland University of Technology. Pioneer in evolving connectionist systems with 
+                        600+ publications and 35+ books.
+                    </p>
+                </div>
+            </div>
+
+            <div class="leader-card">
+                <div class="leader-avatar michael-avatar"></div>
+                <div class="leader-content">
+                    <h4>Michael Zhang, PhD</h4>
+                    <p class="leader-title">Partner, Technology & Innovation</p>
+                    <p class="leader-bio">
+                        Former partner at a leading global strategy consulting firm with deep expertise in 
+                        technology strategy and AI implementation. Leads Innovation Labs research programs 
+                        and industry partnerships with major technology companies and academic institutions.
+                    </p>
+                </div>
+            </div>
+
+            <div class="leader-card">
+                <div class="leader-avatar priya-avatar"></div>
+                <div class="leader-content">
+                    <h4>Dr. Priya Sharma, MD, MBA</h4>
+                    <p class="leader-title">Partner, Healthcare & Life Sciences</p>
+                    <p class="leader-bio">
+                        Former healthcare practice leader at a top-tier consulting firm with clinical background. 
+                        Specializes in AI-driven healthcare transformation, clinical operations optimization, 
+                        and regulatory strategy for life sciences companies.
+                    </p>
+                </div>
+            </div>
+
+            <div class="leader-card">
+                <div class="leader-avatar victoria-avatar"></div>
+                <div class="leader-content">
+                    <h4>Victoria Tan</h4>
+                    <p class="leader-title">Operating Partner, Product & Design</p>
+                    <p class="leader-bio">
+                        Venture studio operating partner specializing in product development and user experience 
+                        design for AI-native companies. Expert in design thinking methodology and human-centered 
+                        AI development across portfolio companies.
+                    </p>
+                </div>
+            </div>
+
+            <div class="leader-card">
+                <div class="leader-avatar james-avatar"></div>
+                <div class="leader-content">
+                    <h4>James Liu, CFA</h4>
+                    <p class="leader-title">Partner, Financial Services & Risk</p>
+                    <p class="leader-bio">
+                        Former investment professional at a leading global investment bank with deep expertise 
+                        in financial services AI transformation and risk management. Leads financial services 
+                        consulting practice and investment banking relationships.
+                    </p>
+                </div>
+            </div>
+
+            <div class="leader-card">
+                <div class="leader-avatar david-avatar"></div>
+                <div class="leader-content">
+                    <h4>David Kim</h4>
+                    <p class="leader-title">Industry Partnerships Director</p>
+                    <p class="leader-bio">
+                        Former APAC Managing Director at a major global consulting firm with extensive experience 
+                        in strategic partnerships and enterprise client relationships. Leads industry collaboration 
+                        initiatives across Innovation Labs and strategic alliances.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Research Section -->
+    <section class="research" id="research">
+        <div class="research-header">
+            <h2 class="section-title">Research & Industry Resources</h2>
+            <p class="section-subtitle">
+                Access our latest research, industry case studies, and strategic frameworks 
+                to accelerate your AI transformation journey.
+            </p>
+        </div>
+
+        <div class="research-categories">
+            <div class="research-card">
+                <div class="research-image" style="background-image: url('https://images.unsplash.com/photo-1541354329998-f4d9a9f9297f?w=600&h=400&fit=crop');">
+                    <a href="https://unsplash.com/photos/person-using-macbook-pro-on-black-table-HJgaV1qjHS0" class="research-image-credit" target="_blank">Photo by Campaign Creators</a>
+                </div>
+                <div class="research-content">
+                    <div class="research-category">CASE STUDY</div>
+                    <h3>Leading Bank: 60% Processing Time Reduction</h3>
+                    <p>How Asia's leading bank transformed operations with our AI framework, 
+                    reducing processing time by 60% and improving customer satisfaction by 40%.</p>
+                    <a href="#" class="research-link">Read Full Case Study →</a>
+                </div>
+            </div>
+
+            <div class="research-card">
+                <div class="research-image" style="background-image: url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&h=400&fit=crop');">
+                    <a href="https://unsplash.com/photos/person-sitting-while-using-laptop-computer-and-green-stethoscope-near-NFvdKIhxYlU" class="research-image-credit" target="_blank">Photo by National Cancer Institute</a>
+                </div>
+                <div class="research-content">
+                    <div class="research-category">INDUSTRY REPORT</div>
+                    <h3>Healthcare AI Implementation Guide</h3>
+                    <p>Comprehensive guide for healthcare providers on implementing AI for 
+                    clinical decision support, patient care optimization, and operational efficiency.</p>
+                    <a href="#" class="research-link">Download Report →</a>
+                </div>
+            </div>
+
+            <div class="research-card">
+                <div class="research-image" style="background-image: url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&h=400&fit=crop');">
+                    <a href="https://unsplash.com/photos/woman-in-white-long-sleeve-shirt-using-black-laptop-computer-hGV2TfOh0ns" class="research-image-credit" target="_blank">Photo by ThisisEngineering</a>
+                </div>
+                <div class="research-content">
+                    <div class="research-category">WHITE PAPER</div>
+                    <h3>Manufacturing 4.0 Playbook</h3>
+                    <p>Strategic framework for manufacturing leaders to implement smart factory 
+                    solutions, predictive maintenance, and AI-driven quality assurance systems.</p>
+                    <a href="#" class="research-link">Access Playbook →</a>
+                </div>
+            </div>
+
+            <div class="research-card">
+                <div class="research-image" style="background-image: url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop');">
+                    <a href="https://unsplash.com/photos/person-using-laptop-computer-holding-card-Q59HmzK38eQ" class="research-image-credit" target="_blank">Photo by rupixen</a>
+                </div>
+                <div class="research-content">
+                    <div class="research-category">RESEARCH</div>
+                    <h3>Retail AI: Personalization at Scale</h3>
+                    <p>Our latest research on implementing AI-driven personalization engines 
+                    and behavioral analytics platforms for next-generation retail experiences.</p>
+                    <a href="#" class="research-link">Read Research →</a>
+                </div>
+            </div>
+
+            <div class="research-card">
+                <div class="research-image" style="background-image: url('https://images.unsplash.com/photo-1555255707-c07966088b7b?w=600&h=400&fit=crop');">
+                    <a href="https://unsplash.com/photos/black-and-white-robot-toy-on-red-wooden-table-0E_vhMVqL9g" class="research-image-credit" target="_blank">Photo by Rock'n Roll Monkey</a>
+                </div>
+                <div class="research-content">
+                    <div class="research-category">INNOVATION BRIEF</div>
+                    <h3>Agentic Intelligence: The Next Frontier</h3>
+                    <p>Exploring autonomous AI systems capable of reasoning, planning, and 
+                    acting independently while maintaining human alignment and ethical boundaries.</p>
+                    <a href="#" class="research-link">Explore Research →</a>
+                </div>
+            </div>
+
+            <div class="research-card">
+                <div class="research-image" style="background-image: url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop');">
+                    <a href="https://unsplash.com/photos/person-using-macbook-pro-on-white-table-hpjSkU2UYSU" class="research-image-credit" target="_blank">Photo by Carlos Muza</a>
+                </div>
+                <div class="research-content">
+                    <div class="research-category">FRAMEWORK</div>
+                    <h3>The Kiros Strategic AI Framework™</h3>
+                    <p>Download our proprietary 4-phase transformation methodology used by 
+                    Fortune 500 companies to accelerate their AI journey from vision to value.</p>
+                    <a href="#" class="research-link">Download Framework →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="contact">
+        <div class="cta-content">
+            <h2>Ready to Transform Your Enterprise with Strategic AI?</h2>
+            <p>
+                Join the leading enterprises partnering with KIROS Intelligence Group to shape 
+                the future of intelligent business across Asia-Pacific.
+            </p>
+            <div class="cta-buttons">
+                <a href="mailto:consulting@kiros-intelligence.com" class="btn btn-white">Schedule Strategic Consultation</a>
+                <a href="#research" class="btn btn-outline-white">Download AI Framework</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-brand">
+                <div class="footer-logo">
+                    <div class="logo-container">
+                        <div class="logo-mark">K</div>
+                        <div class="logo-text">
+                            <div class="logo-name">KIROS</div>
+                            <div class="logo-tagline">INTELLIGENCE GROUP</div>
+                        </div>
+                    </div>
+                </div>
+                <p>
+                    Strategic Intelligence Platform combining world-class consulting, 
+                    breakthrough research, active venture building, and growth capital investment.
+                </p>
+                <div class="footer-quote">
+                    "KIROS Intelligence Group represents the future of strategic intelligence 
+                    platforms—where timing meets intelligence to shape tomorrow's economy."
+                    <br><br>
+                    — Dr. Clarence Tan, Managing Partner & CEO
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h4>Divisions</h4>
+                <ul>
+                    <li><a href="#divisions">Strategic Consulting</a></li>
+                    <li><a href="#divisions">Innovation Labs</a></li>
+                    <li><a href="#divisions">Venture Studio</a></li>
+                    <li><a href="#divisions">Capital Partners</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="#portfolio">Portfolio Companies</a></li>
+                    <li><a href="#leadership">Leadership Team</a></li>
+                    <li><a href="#research">Research & Reports</a></li>
+                    <li><a href="#research">AI Framework</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h4>Contact</h4>
+                <ul>
+                    <li><a href="mailto:consulting@kiros-intelligence.com">Consulting</a></li>
+                    <li><a href="mailto:research@kiros-intelligence.com">Research</a></li>
+                    <li><a href="mailto:ventures@kiros-intelligence.com">Ventures</a></li>
+                    <li><a href="mailto:capital@kiros-intelligence.com">Capital</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>© 2025 KIROS Intelligence Group. All rights reserved. | A GLB Group APAC Strategic Initiative | Singapore • Auckland • Kuala Lumpur • Manila • Seattle</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Apply observer to cards and sections
+        document.querySelectorAll('.value-card, .division-card, .portfolio-card, .leader-card, .research-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+
+        // Counter animation for stats
+        function animateCounter(element, target, duration = 2000) {
+            let start = 0;
+            const increment = target / (duration / 16);
+            const timer = setInterval(() => {
+                start += increment;
+                if (start >= target) {
+                    start = target;
+                    clearInterval(timer);
+                }
+                element.textContent = element.dataset.prefix + Math.floor(start) + element.dataset.suffix;
+            }, 16);
+        }
+
+        // Trigger counter animation when stats are in view
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !entry.target.classList.contains('animated')) {
+                    entry.target.classList.add('animated');
+                    const statNumbers = entry.target.querySelectorAll('.hero-stat-number, .portfolio-stat-number');
+                    statNumbers.forEach(stat => {
+                        const text = stat.textContent;
+                        const number = parseInt(text.replace(/\D/g, ''));
+                        const prefix = text.match(/^[^\d]*/)[0];
+                        const suffix = text.match(/[^\d]*$/)[0];
+                        stat.dataset.prefix = prefix;
+                        stat.dataset.suffix = suffix;
+                        animateCounter(stat, number);
+                    });
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.hero-stats, .portfolio-stats').forEach(section => {
+            statsObserver.observe(section);
+        });
+    </script>
+</body>
+</html>
