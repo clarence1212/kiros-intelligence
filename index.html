@@ -1797,7 +1797,7 @@
                     AI-driven child & adolescent digital wellness platform with privacy-preserving systems.
                 </p>
                 <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(255, 255, 255, 0.1);">
-                    <a href="https://safeguardai.me" target="_blank" rel="noopener noreferrer" style="color: var(--accent-gold); text-decoration: none; font-size: 0.9rem; font-weight: 600;" onclick="window.open('https://safeguardai.me', '_blank'); return false;">
+                    <a href="https://safeguardai.me" target="_blank" style="color: var(--accent-gold); text-decoration: underline; font-size: 0.9rem; font-weight: 600; cursor: pointer;" onmouseover="this.style.textDecoration='underline'" onclick="console.log('Link clicked!'); return true;">
                         safeguardai.me →
                     </a>
                 </div>
@@ -2177,6 +2177,58 @@
     </footer>
 
     <script>
+        // Simple copy to clipboard function
+        function copyToClipboard(text) {
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text).then(function() {
+                    alert('Website URL copied to clipboard: ' + text + '\nYou can now paste it in your browser address bar.');
+                });
+            } else {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                alert('Website URL copied to clipboard: ' + text + '\nYou can now paste it in your browser address bar.');
+            }
+        }
+
+        // SafeGuardAI link handler with multiple fallbacks
+        function handleSafeGuardClick(event) {
+            event.preventDefault();
+            
+            // Try multiple URL variations
+            const urls = [
+                'https://safeguardai.me',
+                'https://www.safeguardai.me', 
+                'http://safeguardai.me',
+                'http://www.safeguardai.me'
+            ];
+            
+            // Try each URL until one works
+            for (let i = 0; i < urls.length; i++) {
+                try {
+                    const newWindow = window.open(urls[i], '_blank', 'noopener,noreferrer');
+                    if (newWindow) {
+                        break; // Success, stop trying
+                    }
+                } catch (e) {
+                    console.log(`Failed to open ${urls[i]}`);
+                    if (i === urls.length - 1) {
+                        // Last attempt - copy to clipboard
+                        if (navigator.clipboard) {
+                            navigator.clipboard.writeText('safeguardai.me');
+                            alert('Link copied to clipboard: safeguardai.me');
+                        } else {
+                            alert('Please visit: safeguardai.me');
+                        }
+                    }
+                }
+            }
+        }
+
         // Navigation scroll effect
         window.addEventListener('scroll', () => {
             const navbar = document.getElementById('navbar');
