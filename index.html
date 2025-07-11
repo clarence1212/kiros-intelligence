@@ -898,34 +898,87 @@
             opacity: 1;
         }
 
+        /* KIROS-style Portfolio Company Logos */
         .company-logo {
-            width: 80px;
-            height: 80px;
-            background: var(--gradient-gold);
-            border-radius: 16px;
-            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .company-mark {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 1.4rem;
             font-weight: 700;
-            font-size: 1.5rem;
             color: white;
+            flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
             position: relative;
-            overflow: hidden;
         }
+
+        .company-mark::after {
+            content: '';
+            position: absolute;
+            top: -1px;
+            right: -1px;
+            width: 6px;
+            height: 6px;
+            background: var(--accent-gold);
+            border-radius: 50%;
+            box-shadow: 0 0 8px rgba(245, 158, 11, 0.6);
+        }
+
+        .company-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .company-name {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: white;
+            letter-spacing: 0.5px;
+            line-height: 1;
+        }
+
+        .company-tagline {
+            font-size: 0.6rem;
+            color: rgba(255,255,255,0.6);
+            letter-spacing: 1px;
+            font-weight: 500;
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
+        /* Individual company colors */
+        .agentrify-mark { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .safeguard-mark { background: linear-gradient(135deg, #059669 0%, #065f46 100%); }
+        .hyperbrain-mark { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); }
+        .evolearn-mark { background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%); }
+        .ecosmart-mark { background: linear-gradient(135deg, #16a34a 0%, #15803d 100%); }
+        .carepal-mark { background: linear-gradient(135deg, #e11d48 0%, #be123c 100%); }
+        .ecoautomation-mark { background: linear-gradient(135deg, #10b981 0%, #047857 100%); }
+        .knowledge-mark { background: linear-gradient(135deg, #6366f1 0%, #4338ca 100%); }
 
         .portfolio-card h4 {
             font-size: 1.25rem;
             margin-bottom: 0.5rem;
             color: white;
-            text-align: center;
+            text-align: left;
         }
 
         .portfolio-stage {
             color: var(--accent-gold);
             font-size: 0.875rem;
             font-weight: 600;
-            text-align: center;
+            text-align: left;
             margin-bottom: 1rem;
         }
 
@@ -933,12 +986,42 @@
             color: #CBD5E1;
             font-size: 0.875rem;
             line-height: 1.6;
-            text-align: center;
+            text-align: left;
+        }
+
+        .portfolio-website {
+            display: block;
+            text-align: left;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 999;
+        }
+
+        .portfolio-website a {
+            color: var(--accent-gold);
+            text-decoration: underline;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-block;
+            padding: 4px 8px;
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 4px;
+            position: relative;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .portfolio-website a:hover {
+            background: rgba(212, 175, 55, 0.2);
+            transform: translateX(2px);
         }
 
         .portfolio-investment {
             display: block;
-            text-align: center;
+            text-align: left;
             margin-top: 1rem;
             padding-top: 1rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -1427,7 +1510,7 @@
                 grid-template-columns: 1fr;
             }
 
-            .synergy-diagram {
+            .synergy-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
 
@@ -1775,14 +1858,20 @@
 
         <div class="portfolio-grid">
             <div class="portfolio-card">
-                <div class="company-logo">AG</div>
+                <div class="company-logo">
+                    <div class="company-mark agentrify-mark">A</div>
+                    <div class="company-text">
+                        <div class="company-name">AGENTRIFY</div>
+                        <div class="company-tagline">AUTONOMOUS AI</div>
+                    </div>
+                </div>
                 <h4>Agentrify.AI</h4>
                 <p class="portfolio-stage">Stealth Mode • Series A</p>
                 <p class="portfolio-description">
                     Architects of the Agentic Economy. Autonomous systems redefining enterprise productivity.
                 </p>
-                <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(255, 255, 255, 0.1);">
-                    <a href="https://agentrifyai.com" target="_blank" rel="noopener noreferrer" style="color: var(--accent-gold); text-decoration: none; font-size: 0.9rem; font-weight: 600;" onclick="window.open('https://agentrifyai.com', '_blank'); return false;">
+                <div class="portfolio-website">
+                    <a href="https://agentrifyai.com" target="_blank" onclick="console.log('Agentrify link clicked!'); window.open('https://agentrifyai.com', '_blank'); return false;">
                         agentrifyai.com →
                     </a>
                 </div>
@@ -1790,14 +1879,20 @@
             </div>
 
             <div class="portfolio-card">
-                <div class="company-logo">SG</div>
+                <div class="company-logo">
+                    <div class="company-mark safeguard-mark">S</div>
+                    <div class="company-text">
+                        <div class="company-name">SAFEGUARD</div>
+                        <div class="company-tagline">DIGITAL WELLNESS</div>
+                    </div>
+                </div>
                 <h4>SafeGuardAI</h4>
                 <p class="portfolio-stage">Series A • 2024</p>
                 <p class="portfolio-description">
                     AI-driven child & adolescent digital wellness platform with privacy-preserving systems.
                 </p>
-                <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(255, 255, 255, 0.1);">
-                    <a href="https://safeguardai.me" target="_blank" style="color: var(--accent-gold); text-decoration: underline; font-size: 0.9rem; font-weight: 600; cursor: pointer;" onmouseover="this.style.textDecoration='underline'" onclick="console.log('Link clicked!'); return true;">
+                <div class="portfolio-website">
+                    <a href="https://safeguardai.me" target="_blank" onclick="console.log('SafeGuard link clicked!'); window.open('https://safeguardai.me', '_blank'); return false;">
                         safeguardai.me →
                     </a>
                 </div>
@@ -1805,14 +1900,20 @@
             </div>
 
             <div class="portfolio-card">
-                <div class="company-logo">HB</div>
+                <div class="company-logo">
+                    <div class="company-mark hyperbrain-mark">H</div>
+                    <div class="company-text">
+                        <div class="company-name">HYPERMINDQ</div>
+                        <div class="company-tagline">GENERATIVE QUANTUM AI</div>
+                    </div>
+                </div>
                 <h4>HyperbrainQ</h4>
                 <p class="portfolio-stage">Series A • 2020</p>
                 <p class="portfolio-description">
                     Agentic AI platforms for enterprise intelligence with brain-inspired architectures.
                 </p>
-                <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(255, 255, 255, 0.1);">
-                    <a href="https://hypermindq.ai" target="_blank" rel="noopener noreferrer" style="color: var(--accent-gold); text-decoration: none; font-size: 0.9rem; font-weight: 600;" onclick="window.open('https://hypermindq.ai', '_blank'); return false;">
+                <div class="portfolio-website">
+                    <a href="https://hypermindq.ai" target="_blank" onclick="console.log('HyperbrainQ link clicked!'); window.open('https://hypermindq.ai', '_blank'); return false;">
                         hypermindq.ai →
                     </a>
                 </div>
@@ -1820,14 +1921,20 @@
             </div>
 
             <div class="portfolio-card">
-                <div class="company-logo">EL</div>
+                <div class="company-logo">
+                    <div class="company-mark evolearn-mark">E</div>
+                    <div class="company-text">
+                        <div class="company-name">EVOLEARN</div>
+                        <div class="company-tagline">EDUCATION AI</div>
+                    </div>
+                </div>
                 <h4>EvoLearn AI</h4>
                 <p class="portfolio-stage">Pre-Series A • 2024</p>
                 <p class="portfolio-description">
                     Conversational AI for early childhood education with adaptive curriculum.
                 </p>
-                <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(255, 255, 255, 0.1);">
-                    <a href="https://evolearn.me" target="_blank" rel="noopener noreferrer" style="color: var(--accent-gold); text-decoration: none; font-size: 0.9rem; font-weight: 600;" onclick="window.open('https://evolearn.me', '_blank'); return false;">
+                <div class="portfolio-website">
+                    <a href="https://evolearn.me" target="_blank" onclick="console.log('EvoLearn link clicked!'); window.open('https://evolearn.me', '_blank'); return false;">
                         evolearn.me →
                     </a>
                 </div>
@@ -1835,14 +1942,20 @@
             </div>
 
             <div class="portfolio-card">
-                <div class="company-logo" style="background-image: url('https://github.com/clarence1212/images/blob/main/ecosmartglobal-logo.png?raw=true'); background-size: contain; background-repeat: no-repeat; background-position: center; background-color: white; font-size: 0;">ES</div>
+                <div class="company-logo">
+                    <div class="company-mark ecosmart-mark">G</div>
+                    <div class="company-text">
+                        <div class="company-name">ECO SMART</div>
+                        <div class="company-tagline">ADVANCED ENERGY RESEARCH</div>
+                    </div>
+                </div>
                 <h4>Eco Smart Global</h4>
                 <p class="portfolio-stage">Seed • 2024</p>
                 <p class="portfolio-description">
                     Generative AI & edge intelligence solutions for multi-industry applications with sustainable technology focus.
                 </p>
-                <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(255, 255, 255, 0.1);">
-                    <a href="https://ecosmartglobal.co" target="_blank" rel="noopener noreferrer" style="color: var(--accent-gold); text-decoration: none; font-size: 0.9rem; font-weight: 600;" onclick="window.open('https://ecosmartglobal.co', '_blank'); return false;">
+                <div class="portfolio-website">
+                    <a href="https://ecosmartglobal.co" target="_blank" onclick="console.log('EcoSmart link clicked!'); window.open('https://ecosmartglobal.co', '_blank'); return false;">
                         ecosmartglobal.co →
                     </a>
                 </div>
@@ -1850,14 +1963,20 @@
             </div>
 
             <div class="portfolio-card">
-                <div class="company-logo">CP</div>
+                <div class="company-logo">
+                    <div class="company-mark carepal-mark">C</div>
+                    <div class="company-text">
+                        <div class="company-name">CAREPAL</div>
+                        <div class="company-tagline">SENIOR CARE</div>
+                    </div>
+                </div>
                 <h4>CarePal</h4>
                 <p class="portfolio-stage">Seed • 2024</p>
                 <p class="portfolio-description">
                     AI-powered senior care & companionship platform with virtual caregiver services.
                 </p>
-                <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(255, 255, 255, 0.1);">
-                    <a href="https://carepal.me" target="_blank" rel="noopener noreferrer" style="color: var(--accent-gold); text-decoration: none; font-size: 0.9rem; font-weight: 600;" onclick="window.open('https://carepal.me', '_blank'); return false;">
+                <div class="portfolio-website">
+                    <a href="https://carepal.me" target="_blank" onclick="console.log('CarePal link clicked!'); window.open('https://carepal.me', '_blank'); return false;">
                         carepal.me →
                     </a>
                 </div>
@@ -1865,14 +1984,20 @@
             </div>
 
             <div class="portfolio-card">
-                <div class="company-logo">EA</div>
+                <div class="company-logo">
+                    <div class="company-mark ecoautomation-mark">E</div>
+                    <div class="company-text">
+                        <div class="company-name">ECOLOGICAL</div>
+                        <div class="company-tagline">SMART ENERGY</div>
+                    </div>
+                </div>
                 <h4>Ecological Automation</h4>
                 <p class="portfolio-stage">Revenue • 2023</p>
                 <p class="portfolio-description">
                     AI-driven smart energy & sustainability solutions with virtual power plant tech.
                 </p>
-                <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(255, 255, 255, 0.1);">
-                    <a href="https://ecologicalautomation.co.nz" target="_blank" rel="noopener noreferrer" style="color: var(--accent-gold); text-decoration: none; font-size: 0.9rem; font-weight: 600;" onclick="window.open('https://ecologicalautomation.co.nz', '_blank'); return false;">
+                <div class="portfolio-website">
+                    <a href="https://ecologicalautomation.co.nz" target="_blank" onclick="console.log('EcoAutomation link clicked!'); window.open('https://ecologicalautomation.co.nz', '_blank'); return false;">
                         ecologicalautomation.co.nz →
                     </a>
                 </div>
@@ -1880,7 +2005,13 @@
             </div>
 
             <div class="portfolio-card">
-                <div class="company-logo">KE</div>
+                <div class="company-logo">
+                    <div class="company-mark knowledge-mark">K</div>
+                    <div class="company-text">
+                        <div class="company-name">KNOWLEDGE</div>
+                        <div class="company-tagline">CONSULTING</div>
+                    </div>
+                </div>
                 <h4>Knowledge Engineering</h4>
                 <p class="portfolio-stage">Revenue • 2022</p>
                 <p class="portfolio-description">
