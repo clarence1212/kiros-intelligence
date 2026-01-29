@@ -3,1051 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI-Powered ERM Transformation Proposal | Ayala Land, Inc.</title>
+    <title>AI-Powered ERM Transformation | Ayala Land, Inc.</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #0D47A1;
-            --secondary: #1565C0;
-            --accent: #42A5F5;
-            --highlight: #E3F2FD;
-            --warning: #FF6F00;
-            --success: #2E7D32;
-            --dark: #263238;
-            --gray: #666666;
-            --light-gray: #f5f5f5;
+            --primary: #0a1628;
+            --secondary: #1e3a5f;
+            --accent: #3b82f6;
+            --accent-light: #60a5fa;
+            --gold: #d4a853;
+            --success: #10b981;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-400: #94a3b8;
+            --gray-500: #64748b;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --gradient-1: linear-gradient(135deg, #0a1628 0%, #1e3a5f 50%, #0a1628 100%);
+            --gradient-2: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            --gradient-3: linear-gradient(135deg, #d4a853 0%, #b8860b 100%);
         }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            font-size: 11pt;
-            line-height: 1.6;
-            color: #333;
-            background: #fff;
-        }
-        
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px;
-        }
-        
-        /* Title Page */
-        .title-page {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 60px 40px;
-            page-break-after: always;
-        }
-        
-        .title-page h1 {
-            font-size: 32pt;
-            color: var(--primary);
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-        
-        .title-page .subtitle {
-            font-size: 18pt;
-            color: var(--secondary);
-            margin: 20px 0;
-        }
-        
-        .title-page .client {
-            font-size: 26pt;
-            color: var(--primary);
-            font-weight: 700;
-            margin: 20px 0;
-        }
-        
-        .title-page .tagline {
-            font-size: 14pt;
-            font-style: italic;
-            color: var(--dark);
-            margin: 30px 0;
-        }
-        
-        .title-page .date {
-            font-size: 14pt;
-            margin-top: 40px;
-        }
-        
-        .title-page .confidential {
-            font-size: 12pt;
-            color: #990000;
-            font-weight: bold;
-            margin-top: 20px;
-        }
-        
-        /* Headings */
-        h1 {
-            font-size: 20pt;
-            color: var(--primary);
-            margin: 40px 0 20px 0;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--accent);
-            page-break-after: avoid;
-        }
-        
-        h2 {
-            font-size: 14pt;
-            color: var(--secondary);
-            margin: 30px 0 15px 0;
-            page-break-after: avoid;
-        }
-        
-        h3 {
-            font-size: 12pt;
-            color: var(--dark);
-            margin: 20px 0 10px 0;
-            page-break-after: avoid;
-        }
-        
-        p {
-            margin-bottom: 15px;
-            text-align: justify;
-        }
-        
-        /* Tables */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            font-size: 10pt;
-            page-break-inside: avoid;
-        }
-        
-        th {
-            background: var(--primary);
-            color: white;
-            padding: 12px 10px;
-            text-align: left;
-            font-weight: 600;
-        }
-        
-        td {
-            padding: 10px;
-            border: 1px solid #ddd;
-            vertical-align: top;
-        }
-        
-        tr:nth-child(even) {
-            background: var(--light-gray);
-        }
-        
-        .highlight-row {
-            background: var(--highlight) !important;
-            font-weight: 600;
-        }
-        
-        /* Metrics Table */
-        .metrics-table {
-            margin: 20px 0;
-        }
-        
-        .metrics-table td {
-            text-align: center;
-            padding: 15px;
-            border: none;
-        }
-        
-        .metrics-table .metric-value {
-            font-size: 24pt;
-            font-weight: 700;
-            color: white;
-            display: block;
-        }
-        
-        .metrics-table .metric-label {
-            font-size: 10pt;
-            color: white;
-        }
-        
-        .bg-primary { background: var(--primary); }
-        .bg-secondary { background: var(--secondary); }
-        .bg-accent { background: var(--accent); }
-        .bg-warning { background: var(--warning); }
-        
-        /* Lists */
-        ul, ol {
-            margin: 15px 0 15px 25px;
-        }
-        
-        li {
-            margin-bottom: 8px;
-        }
-        
-        li strong {
-            color: var(--dark);
-        }
-        
-        /* Special Boxes */
-        .purpose-box {
-            background: var(--highlight);
-            border-left: 4px solid var(--primary);
-            padding: 15px 20px;
-            margin: 20px 0;
-            font-style: italic;
-        }
-        
-        .purpose-box strong {
-            font-style: normal;
-            color: var(--primary);
-        }
-        
-        /* Profile Section */
-        .profile-section {
-            background: var(--light-gray);
-            padding: 25px;
-            border-radius: 8px;
-            margin: 20px 0;
-        }
-        
-        .profile-section h3 {
-            color: var(--primary);
-            margin-top: 0;
-        }
-        
-        .profile-name {
-            font-size: 16pt;
-            color: var(--primary);
-            font-weight: 700;
-        }
-        
-        .profile-credentials {
-            font-style: italic;
-            color: var(--gray);
-            font-size: 11pt;
-        }
-        
-        .profile-title {
-            color: var(--secondary);
-            font-size: 11pt;
-            margin-bottom: 15px;
-        }
-        
-        .logo-placeholder, .photo-placeholder {
-            background: #e0e0e0;
-            border: 2px dashed #999;
-            padding: 20px;
-            text-align: center;
-            color: #666;
-            font-style: italic;
-            margin: 10px 0;
-            border-radius: 4px;
-        }
-        
-        /* Page Breaks */
-        .page-break {
-            page-break-before: always;
-        }
-        
-        /* Footer */
-        .footer {
-            text-align: center;
-            margin-top: 60px;
-            padding-top: 20px;
-            border-top: 1px solid #ddd;
-            color: var(--gray);
-            font-style: italic;
-        }
-        
-        .glb-tag {
-            color: var(--warning);
-            font-style: italic;
-            text-align: center;
-            margin: 30px 0;
-        }
-        
-        /* Print Styles */
-        @media print {
-            body {
-                font-size: 10pt;
-            }
-            
-            .container {
-                max-width: 100%;
-                padding: 20px;
-            }
-            
-            .title-page {
-                min-height: auto;
-                padding: 100px 40px;
-            }
-            
-            h1 {
-                font-size: 16pt;
-            }
-            
-            h2 {
-                font-size: 13pt;
-            }
-            
-            table {
-                font-size: 9pt;
-            }
-        }
-        
-        /* Vision Table Special */
-        .vision-table th {
-            background: var(--dark);
-        }
-        
-        .vision-table td:first-child {
-            font-weight: 600;
-            background: var(--light-gray);
-        }
-        
-        .vision-table td:last-child {
-            background: var(--highlight);
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 16px; line-height: 1.7; color: var(--gray-700); background: var(--gray-50); }
+        .nav { position: fixed; top: 0; left: 0; right: 0; background: rgba(10, 22, 40, 0.95); backdrop-filter: blur(20px); z-index: 1000; padding: 0 40px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .nav-container { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; height: 70px; }
+        .nav-brand { font-weight: 700; font-size: 14px; color: white; letter-spacing: 1px; }
+        .nav-brand span { color: var(--gold); }
+        .nav-menu { display: flex; gap: 8px; list-style: none; }
+        .nav-menu a { color: var(--gray-300); text-decoration: none; font-size: 13px; font-weight: 500; padding: 8px 16px; border-radius: 6px; transition: all 0.3s ease; }
+        .nav-menu a:hover { color: white; background: rgba(255,255,255,0.1); }
+        .nav-cta { background: var(--gradient-3); color: var(--primary) !important; font-weight: 600; }
+        .hero { min-height: 100vh; background: var(--gradient-1); display: flex; align-items: center; justify-content: center; text-align: center; padding: 120px 40px 80px; position: relative; }
+        .hero-content { position: relative; z-index: 1; max-width: 900px; }
+        .hero-badge { display: inline-block; background: rgba(212, 168, 83, 0.2); border: 1px solid var(--gold); color: var(--gold); padding: 8px 20px; border-radius: 50px; font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 30px; }
+        .hero h1 { font-family: 'Playfair Display', serif; font-size: 52px; font-weight: 700; color: white; line-height: 1.2; margin-bottom: 20px; }
+        .hero h1 span { background: var(--gradient-3); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-subtitle { font-size: 20px; color: var(--gray-400); margin-bottom: 40px; font-weight: 300; }
+        .hero-client { font-size: 28px; font-weight: 700; color: white; margin-bottom: 50px; letter-spacing: 3px; }
+        .hero-meta { display: flex; justify-content: center; gap: 40px; margin-bottom: 50px; flex-wrap: wrap; }
+        .hero-meta-item { text-align: center; }
+        .hero-meta-value { font-size: 32px; font-weight: 700; color: var(--accent-light); }
+        .hero-meta-label { font-size: 12px; color: var(--gray-400); text-transform: uppercase; letter-spacing: 1px; }
+        .hero-cta { display: inline-flex; align-items: center; gap: 10px; background: var(--gradient-3); color: var(--primary); padding: 16px 32px; border-radius: 8px; font-weight: 600; text-decoration: none; transition: transform 0.3s ease; }
+        .hero-cta:hover { transform: translateY(-2px); }
+        .main { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+        .section { padding: 80px 0; border-bottom: 1px solid var(--gray-200); }
+        .section-header { text-align: center; margin-bottom: 50px; }
+        .section-number { display: inline-block; background: var(--gradient-2); color: white; width: 40px; height: 40px; border-radius: 50%; font-size: 14px; font-weight: 700; line-height: 40px; margin-bottom: 20px; }
+        .section-title { font-family: 'Playfair Display', serif; font-size: 36px; color: var(--primary); margin-bottom: 15px; }
+        .section-subtitle { font-size: 18px; color: var(--gray-500); max-width: 600px; margin: 0 auto; }
+        .card { background: white; border-radius: 16px; padding: 35px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid var(--gray-200); transition: transform 0.3s ease; }
+        .card:hover { transform: translateY(-4px); }
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+        .card-icon { width: 55px; height: 55px; background: var(--gradient-2); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 18px; }
+        .card h3 { font-size: 18px; color: var(--primary); margin-bottom: 10px; }
+        .card p { color: var(--gray-600); font-size: 14px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 15px; margin: 35px 0; }
+        .stat-card { background: white; border-radius: 12px; padding: 25px 15px; text-align: center; border: 1px solid var(--gray-200); }
+        .stat-value { font-size: 26px; font-weight: 700; color: var(--accent); margin-bottom: 6px; }
+        .stat-label { font-size: 12px; color: var(--gray-500); }
+        .module-card { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid var(--gray-200); margin-bottom: 35px; }
+        .module-header { background: var(--gradient-1); color: white; padding: 25px 35px; }
+        .module-number { font-size: 11px; color: var(--gold); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; }
+        .module-title { font-size: 22px; font-weight: 700; }
+        .module-purpose { background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-left: 4px solid var(--gold); padding: 18px 25px; margin: 25px 35px; border-radius: 0 8px 8px 0; }
+        .module-content { padding: 0 35px 35px; }
+        table { width: 100%; border-collapse: collapse; font-size: 14px; margin: 20px 0; }
+        th { background: var(--primary); color: white; padding: 14px 18px; text-align: left; font-weight: 600; font-size: 12px; text-transform: uppercase; }
+        td { padding: 14px 18px; border-bottom: 1px solid var(--gray-200); vertical-align: top; }
+        tr:hover td { background: var(--gray-50); }
+        td strong { color: var(--primary); }
+        .highlight-row td { background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); font-weight: 600; }
+        ul, ol { margin: 18px 0; padding-left: 22px; }
+        li { margin-bottom: 10px; color: var(--gray-700); font-size: 14px; }
+        li strong { color: var(--primary); }
+        .phase-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
+        .phase-card { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid var(--gray-200); }
+        .phase-header { padding: 22px; color: white; text-align: center; }
+        .phase-1 .phase-header { background: var(--accent); }
+        .phase-2 .phase-header { background: var(--secondary); }
+        .phase-3 .phase-header { background: var(--primary); }
+        .phase-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+        .phase-period { font-size: 11px; opacity: 0.8; margin-top: 4px; }
+        .phase-content { padding: 22px; }
+        .phase-content h4 { font-size: 12px; color: var(--gray-500); text-transform: uppercase; margin-bottom: 6px; }
+        .phase-content p { font-size: 13px; color: var(--gray-700); margin-bottom: 15px; }
+        .partner-section { background: var(--gradient-1); border-radius: 20px; padding: 50px; color: white; margin: 50px 0; }
+        .partner-section h2 { font-family: 'Playfair Display', serif; font-size: 30px; margin-bottom: 25px; }
+        .partner-section h3 { color: var(--gold); font-size: 16px; margin: 25px 0 12px; }
+        .partner-section p { color: var(--gray-300); font-size: 14px; line-height: 1.8; }
+        .partner-section ul { list-style: none; padding: 0; }
+        .partner-section li { color: var(--gray-300); padding: 6px 0 6px 22px; position: relative; font-size: 14px; }
+        .partner-section li::before { content: '→'; position: absolute; left: 0; color: var(--gold); }
+        .partner-section li strong { color: white; }
+        .partner-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; margin-top: 35px; }
+        .partner-info { border-left: 2px solid var(--gold); padding-left: 25px; }
+        .partner-name { font-size: 20px; font-weight: 700; color: white; }
+        .partner-credentials { color: var(--gold); font-size: 13px; margin: 4px 0; }
+        .partner-title { color: var(--gray-400); font-size: 13px; margin-bottom: 15px; }
+        .next-steps { background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); border-radius: 14px; padding: 35px; margin-top: 35px; }
+        .next-steps h3 { color: var(--primary); margin-bottom: 18px; font-size: 18px; }
+        .next-steps ol { counter-reset: step; list-style: none; padding: 0; }
+        .next-steps li { counter-increment: step; padding: 12px 0 12px 55px; position: relative; border-bottom: 1px solid var(--gray-200); color: var(--gray-700); }
+        .next-steps li:last-child { border-bottom: none; }
+        .next-steps li::before { content: counter(step); position: absolute; left: 0; top: 10px; width: 32px; height: 32px; background: var(--gradient-2); color: white; border-radius: 50%; font-weight: 700; font-size: 13px; display: flex; align-items: center; justify-content: center; }
+        .footer { background: var(--primary); color: white; text-align: center; padding: 35px; margin-top: 60px; }
+        .footer-brand { color: var(--gold); font-size: 13px; font-weight: 600; letter-spacing: 2px; margin-bottom: 8px; }
+        .footer p { color: var(--gray-400); font-size: 12px; }
+        @media (max-width: 1024px) { .phase-grid, .partner-grid { grid-template-columns: 1fr; } .stats-grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 768px) { .nav-menu { display: none; } .hero h1 { font-size: 32px; } .hero-meta { flex-direction: column; gap: 15px; } .stats-grid { grid-template-columns: repeat(2, 1fr); } .section { padding: 50px 0; } .partner-section { padding: 30px; } }
+        @media print { .nav { display: none; } .hero { min-height: auto; padding: 50px 30px; } }
     </style>
 </head>
 <body>
+<nav class="nav"><div class="nav-container"><div class="nav-brand">KIROS <span>INTELLIGENCE</span></div><ul class="nav-menu"><li><a href="#summary">Summary</a></li><li><a href="#vision">Vision</a></li><li><a href="#platform">Platform</a></li><li><a href="#modules">Modules</a></li><li><a href="#roadmap">Roadmap</a></li><li><a href="#investment">Investment</a></li><li><a href="#partner" class="nav-cta">Partner</a></li></ul></div></nav>
 
-<!-- TITLE PAGE -->
-<div class="title-page">
-    <h1>AI-POWERED ENTERPRISE RISK MANAGEMENT</h1>
-    <h1 style="margin-top: 0;">TRANSFORMATION PROPOSAL</h1>
-    
-    <p class="subtitle">Leveraging Generative AI & Agentic AI</p>
-    <p>for</p>
-    <p class="client">AYALA LAND, INC.</p>
-    
-    <p class="tagline">Comprehensive Platform for Risk Assessment, Review, Reporting, Action & Monitoring</p>
-    
-    <p class="date">January 2026</p>
-    <p class="confidential">STRICTLY CONFIDENTIAL</p>
-</div>
+<section class="hero"><div class="hero-content"><div class="hero-badge">Strictly Confidential • January 2026</div><h1>AI-Powered Enterprise Risk Management <span>Transformation</span></h1><p class="hero-subtitle">Leveraging Generative AI & Agentic AI for comprehensive risk assessment, review, reporting, action & monitoring</p><p class="hero-client">AYALA LAND, INC.</p><div class="hero-meta"><div class="hero-meta-item"><div class="hero-meta-value">70-80%</div><div class="hero-meta-label">Efficiency Gain</div></div><div class="hero-meta-item"><div class="hero-meta-value">3-6 mo</div><div class="hero-meta-label">Early Warning</div></div><div class="hero-meta-item"><div class="hero-meta-value">24/7</div><div class="hero-meta-label">AI Monitoring</div></div><div class="hero-meta-item"><div class="hero-meta-value">18 mo</div><div class="hero-meta-label">Implementation</div></div></div><a href="#summary" class="hero-cta">Explore Proposal ↓</a></div></section>
 
-<div class="container">
+<main class="main">
+<section id="summary" class="section"><div class="section-header"><div class="section-number">1</div><h2 class="section-title">Executive Summary</h2><p class="section-subtitle">Transforming ALI's Advanced ERM maturity into AI-powered competitive advantage</p></div><div class="card" style="margin-bottom: 35px;"><h3 style="color: var(--primary); margin-bottom: 18px;">The Transformation Opportunity</h3><p>Ayala Land, Inc. (ALI) has achieved <strong>Advanced maturity (5.0/5.0)</strong> in enterprise risk management—positioning the company as a regional leader. This proposal outlines a comprehensive transformation program leveraging <strong>Generative AI (GenAI)</strong> and <strong>Agentic AI</strong> to revolutionize ALI's risk management capabilities across the entire ASSESS → REVIEW → REPORT → ACTION → MONITOR lifecycle.</p><p style="margin-top: 18px; padding: 18px; background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-radius: 8px;"><strong>Strategic Alignment:</strong> ALI's 2024 Integrated Report explicitly identifies <em>"the rise and adoption of Artificial Intelligence that poses both opportunities and risks"</em> as a key Technology and Innovation Risk.</p></div><div class="stats-grid"><div class="stat-card"><div class="stat-value">70-80%</div><div class="stat-label">Manual effort reduction</div></div><div class="stat-card"><div class="stat-value">Real-time</div><div class="stat-label">vs. semi-annual</div></div><div class="stat-card"><div class="stat-value">3-6 mo</div><div class="stat-label">Predictive warnings</div></div><div class="stat-card"><div class="stat-value">Auto</div><div class="stat-label">Board-ready insights</div></div><div class="stat-card"><div class="stat-value">First</div><div class="stat-label">AI-native in PH RE</div></div></div></section>
 
-<!-- SECTION 1: EXECUTIVE SUMMARY -->
-<h1>1. Executive Summary</h1>
+<section id="vision" class="section"><div class="section-header"><div class="section-number">2</div><h2 class="section-title">The AI-Powered ERM Vision</h2><p class="section-subtitle">From manual processes to intelligent automation</p></div><table><tr><th style="width:12%">Function</th><th style="width:38%">Current State</th><th style="width:50%">AI-Enabled Future</th></tr><tr><td><strong>ASSESS</strong></td><td>Manual BU assessments, periodic reviews</td><td style="background:#ecfdf5">Continuous AI scanning, auto-quantification, predictive modeling</td></tr><tr><td><strong>REVIEW</strong></td><td>Risk Council meetings, manual document review</td><td style="background:#ecfdf5">AI agents autonomously analyze, provide recommendations</td></tr><tr><td><strong>REPORT</strong></td><td>Semi-annual BROC reports, static dashboards</td><td style="background:#ecfdf5">Real-time AI-generated reports, natural language insights</td></tr><tr><td><strong>ACTION</strong></td><td>Manual mitigation tracking, reactive response</td><td style="background:#ecfdf5">Agentic AI orchestrates responses, automates workflows</td></tr><tr><td><strong>MONITOR</strong></td><td>Periodic KRI tracking, lagging indicators</td><td style="background:#ecfdf5">24/7 AI surveillance, predictive early warnings</td></tr></table><h3 style="margin:45px 0 25px;color:var(--primary)">Why Now for Ayala Land?</h3><div class="card-grid"><div class="card"><div class="card-icon">🏆</div><h3>Mature ERM Foundation</h3><p>Your Advanced (5.0) maturity provides processes and data infrastructure for AI deployment</p></div><div class="card"><div class="card-icon">🏗️</div><h3>Scale & Complexity</h3><p>53 estates, 10,736 hectares land bank, ₱918.8B in assets</p></div><div class="card"><div class="card-icon">📊</div><h3>Data Richness</h3><p>Decades of property, financial, and operational data for training AI models</p></div><div class="card"><div class="card-icon">🤖</div><h3>Explicit AI Strategy</h3><p>Your 2024 Report identifies AI as both opportunity and risk</p></div><div class="card"><div class="card-icon">🚀</div><h3>Competitive Edge</h3><p>First-mover advantage in AI-powered risk management in Philippine real estate</p></div><div class="card"><div class="card-icon">💰</div><h3>Strong Financials</h3><p>₱28.2B net income (+15%), 0.73:1 net gearing provides investment capacity</p></div></div></section>
 
-<h2>1.1 The Transformation Opportunity</h2>
-<p>Ayala Land, Inc. (ALI) has achieved Advanced maturity (5.0/5.0) in enterprise risk management—positioning the company as a regional leader. This proposal outlines a comprehensive transformation program leveraging Generative AI (GenAI) and Agentic AI to revolutionize ALI's risk management capabilities across the entire ASSESS → REVIEW → REPORT → ACTION → MONITOR lifecycle.</p>
+<section class="section"><div class="section-header"><div class="section-number">2A</div><h2 class="section-title">Alignment with ALI's 2024 Key Risks</h2><p class="section-subtitle">Our platform directly addresses your identified risk priorities</p></div><table><tr><th style="width:30%">ALI 2024 Key Risk</th><th>AI Platform Capability</th></tr><tr><td><strong>Project Execution & Timely Delivery</strong></td><td>AI Project Delay Predictor forecasts construction risks; Contract Risk Extraction automates vendor assessment</td></tr><tr><td><strong>Marginalization by Competitors</strong></td><td>AI Peer Benchmarking analyzes SM Prime, Megaworld, Robinson's Land in real-time</td></tr><tr><td><strong>Organizational Risk</strong></td><td>AI monitors talent metrics, succession gaps; automates knowledge capture</td></tr><tr><td><strong>Financial Risk</strong></td><td>Real-time monitoring of interest rates, FX, credit spreads; scenario modeling</td></tr><tr><td><strong>Technology & Innovation Risk</strong></td><td>This proposal addresses AI opportunity while establishing governance frameworks</td></tr><tr><td><strong>Business Continuity & Cyber Risk</strong></td><td>24/7 Cyber Threat Intelligence; Incident Response Agent automates crisis protocols</td></tr><tr><td><strong>Environmental/Climate Risks</strong></td><td>Climate Risk Modeling across 53 estates; TCFD automation</td></tr><tr><td><strong>Government/Political Risk</strong></td><td>Regulatory Radar monitors SEC, PSE, BSP, DOLE, DENR for policy changes</td></tr></table></section>
 
-<p><strong>Strategic Alignment:</strong> ALI's 2024 Integrated Report explicitly identifies <em>"the rise and adoption of Artificial Intelligence that poses both opportunities and risks"</em> as a key Technology and Innovation Risk. This proposal directly addresses this opportunity by deploying AI to enhance risk management while establishing governance frameworks to manage AI-related risks.</p>
+<section id="platform" class="section"><div class="section-header"><div class="section-number">3</div><h2 class="section-title">Platform Architecture</h2><p class="section-subtitle">Enterprise-grade AI infrastructure built for scale</p></div><table><tr><th>Layer</th><th>Components</th><th>Technology</th></tr><tr><td><strong>User Interface</strong></td><td>Risk Command Center, AI Assistant, Mobile App, Board Portal</td><td>React/Next.js, Natural Language UI, Power BI</td></tr><tr><td><strong>AI Engine</strong></td><td>GenAI Models, Agentic Orchestration, ML Risk Models</td><td>GPT-4/Claude API, LangChain/AutoGen, Vector DBs</td></tr><tr><td><strong>Data Platform</strong></td><td>Risk Data Lake, Knowledge Graph, Document Store</td><td>Snowflake/Databricks, Neo4j, Elasticsearch, Kafka</td></tr><tr><td><strong>Integration</strong></td><td>ERP Connectors, External Data Feeds, API Gateway</td><td>SAP/Oracle connectors, News APIs, REST/GraphQL</td></tr><tr><td><strong>Security</strong></td><td>AI Guardrails, Audit Logging, Access Control</td><td>Azure/AWS security, MLOps, Responsible AI</td></tr></table><h3 style="margin:45px 0 25px;color:var(--primary)">Six Core Modules</h3><div class="card-grid"><div class="card"><div class="card-icon">🔍</div><h3>1. AI Risk Assessment</h3><p>Automated risk discovery and quantification with emerging risk radar</p></div><div class="card"><div class="card-icon">📋</div><h3>2. Automated Review</h3><p>Intelligent document and data analysis with conversational assistant</p></div><div class="card"><div class="card-icon">📊</div><h3>3. Smart Reporting</h3><p>AI-generated insights, dashboards, and board-ready presentations</p></div><div class="card"><div class="card-icon">⚡</div><h3>4. Autonomous Action</h3><p>Agentic workflow automation with human-in-the-loop controls</p></div><div class="card"><div class="card-icon">👁️</div><h3>5. 24/7 Monitoring</h3><p>Predictive surveillance and early warning system</p></div><div class="card"><div class="card-icon">⚖️</div><h3>6. Compliance Intel</h3><p>Automated compliance tracking and regulatory intelligence</p></div></div></section>
 
-<h2>1.2 The AI-Powered ERM Vision</h2>
-<table class="vision-table">
-    <tr>
-        <th>Function</th>
-        <th>Current State</th>
-        <th>AI-Enabled Future</th>
-    </tr>
-    <tr>
-        <td>ASSESS</td>
-        <td>Manual BU assessments, periodic reviews</td>
-        <td>Continuous AI scanning, auto-quantification, predictive modeling</td>
-    </tr>
-    <tr>
-        <td>REVIEW</td>
-        <td>Risk Council meetings, manual document review</td>
-        <td>AI agents autonomously analyze, provide recommendations</td>
-    </tr>
-    <tr>
-        <td>REPORT</td>
-        <td>Semi-annual BROC reports, static dashboards</td>
-        <td>Real-time AI-generated reports, natural language insights</td>
-    </tr>
-    <tr>
-        <td>ACTION</td>
-        <td>Manual mitigation tracking, reactive response</td>
-        <td>Agentic AI orchestrates responses, automates workflows</td>
-    </tr>
-    <tr>
-        <td>MONITOR</td>
-        <td>Periodic KRI tracking, lagging indicators</td>
-        <td>24/7 AI surveillance, predictive early warnings</td>
-    </tr>
-</table>
+<section id="modules" class="section"><div class="section-header"><div class="section-number">4-9</div><h2 class="section-title">Module Capabilities</h2><p class="section-subtitle">Deep dive into each AI-powered module</p></div>
+<div class="module-card"><div class="module-header"><div class="module-number">Module 1</div><div class="module-title">AI Risk Assessment & Identification</div></div><div class="module-purpose"><strong>Purpose:</strong> Transform risk identification from periodic manual exercises to continuous AI-powered discovery.</div><div class="module-content"><table><tr><th>Capability</th><th>AI Application</th></tr><tr><td><strong>Emerging Risk Radar</strong></td><td>AI agents scan global news, research, social media. NLP extracts and classifies risk signals.</td></tr><tr><td><strong>Automated Risk Scoring</strong></td><td>ML models score risks on likelihood/impact. Monte Carlo simulation for quantification.</td></tr><tr><td><strong>Contract Risk Extraction</strong></td><td>GenAI reviews contracts to extract risk clauses and compliance obligations.</td></tr><tr><td><strong>Climate Risk Modeling</strong></td><td>AI integrates typhoon tracks, flood maps across 53 estates. Supports TCFD.</td></tr></table></div></div>
+<div class="module-card"><div class="module-header"><div class="module-number">Module 2</div><div class="module-title">Automated Risk Review & Analysis</div></div><div class="module-purpose"><strong>Purpose:</strong> Deploy AI agents to review documents and provide expert-level risk analysis at scale.</div><div class="module-content"><table><tr><th>Capability</th><th>AI Application</th></tr><tr><td><strong>Intelligent Document Review</strong></td><td>GenAI reviews policies, audit reports. Extracts findings, identifies gaps.</td></tr><tr><td><strong>Risk-Control Mapping</strong></td><td>AI maps risks to controls, identifies gaps, suggests remediation.</td></tr><tr><td><strong>Peer Benchmarking</strong></td><td>AI benchmarks ALI against SM Prime, Megaworld, Robinson's Land.</td></tr></table><h4 style="margin-top:25px;color:var(--primary)">Conversational Risk Assistant</h4><ul><li>"What are the top risks for our Cebu estates?"</li><li>"Summarize cyber incidents in the past 6 months"</li><li>"Draft a risk summary for the BROC on climate risks"</li></ul></div></div>
+<div class="module-card"><div class="module-header"><div class="module-number">Module 3</div><div class="module-title">Intelligent Risk Reporting & Dashboards</div></div><div class="module-purpose"><strong>Purpose:</strong> Automate report generation and provide real-time risk intelligence.</div><div class="module-content"><table><tr><th>Report</th><th>Audience</th><th>AI Automation</th></tr><tr><td><strong>BROC Report</strong></td><td>Board Committee</td><td>Auto-generated summary, heatmaps, recommendations</td></tr><tr><td><strong>Risk Briefing</strong></td><td>Risk Council, CRO</td><td>Detailed analysis, mitigation tracking</td></tr><tr><td><strong>Flash Alerts</strong></td><td>CEO, CRO</td><td>Real-time alerts with impact assessment</td></tr></table></div></div>
+<div class="module-card"><div class="module-header"><div class="module-number">Module 4</div><div class="module-title">Autonomous Risk Action & Response</div></div><div class="module-purpose"><strong>Purpose:</strong> Deploy agentic AI to orchestrate risk responses and automate workflows.</div><div class="module-content"><table><tr><th>Agent</th><th>Actions</th></tr><tr><td><strong>Risk Escalation</strong></td><td>Auto-escalates when thresholds breached, routes by severity</td></tr><tr><td><strong>Mitigation Orchestrator</strong></td><td>Creates action plans, assigns tasks, tracks progress</td></tr><tr><td><strong>Incident Response</strong></td><td>Activates protocols, notifies crisis team</td></tr></table><p style="margin-top:20px"><strong>Human-in-the-Loop:</strong> AI recommends and drafts, humans approve for high-stakes decisions.</p></div></div>
+<div class="module-card"><div class="module-header"><div class="module-number">Module 5</div><div class="module-title">AI Risk Monitoring & Early Warning</div></div><div class="module-purpose"><strong>Purpose:</strong> Provide 24/7 intelligent surveillance with predictive early warning.</div><div class="module-content"><table><tr><th>Source</th><th>Signals</th><th>AI Analysis</th></tr><tr><td><strong>News & Media</strong></td><td>Company mentions, regulatory news</td><td>Sentiment analysis, relevance scoring</td></tr><tr><td><strong>Financial Markets</strong></td><td>Interest rates, FX, credit spreads</td><td>Correlation analysis, scenario modeling</td></tr><tr><td><strong>Weather</strong></td><td>Typhoon tracks, flood warnings</td><td>Asset-specific impact assessment</td></tr></table><h4 style="margin-top:25px;color:var(--primary)">Predictive Warnings (3-6 months)</h4><ul><li><strong>Project Delay Predictor:</strong> Forecasts from weather, contractor performance</li><li><strong>Tenant Default Predictor:</strong> Identifies at-risk tenants from payment patterns</li><li><strong>Market Correction Warning:</strong> Signals downturns from leading indicators</li></ul></div></div>
+<div class="module-card"><div class="module-header"><div class="module-number">Module 6</div><div class="module-title">Compliance & Regulatory Intelligence</div></div><div class="module-purpose"><strong>Purpose:</strong> Automate compliance monitoring and disclosure preparation.</div><div class="module-content"><ul><li><strong>Regulatory Radar:</strong> AI monitors SEC, PSE, BSP, DOLE, DENR</li><li><strong>SEC Forms:</strong> Auto-populates risk disclosure sections</li><li><strong>TCFD Reports:</strong> Generates climate risk disclosures</li><li><strong>Policy Library:</strong> AI-indexed repository with version control</li></ul></div></div></section>
 
-<h2>1.3 Expected Business Outcomes</h2>
-<ul>
-    <li><strong>70-80% reduction</strong> in manual risk assessment and reporting effort</li>
-    <li><strong>Real-time visibility</strong> vs. semi-annual review cycles</li>
-    <li><strong>Predictive capabilities</strong> identifying risks 3-6 months before materialization</li>
-    <li><strong>Board-ready insights</strong> generated automatically with explainable AI reasoning</li>
-    <li><strong>First-mover advantage</strong> as the AI-native risk leader in Philippine/ASEAN real estate</li>
-</ul>
+<section id="roadmap" class="section"><div class="section-header"><div class="section-number">11</div><h2 class="section-title">Implementation Roadmap</h2><p class="section-subtitle">18-month phased transformation journey</p></div><div class="phase-grid"><div class="phase-card phase-1"><div class="phase-header"><div class="phase-title">Phase 1: Foundation</div><div class="phase-period">Months 1-6</div></div><div class="phase-content"><h4>Focus</h4><p>Core platform, quick wins</p><h4>Modules</h4><p>Risk Assistant, Reporting, Document Review</p><h4>Target</h4><p>50+ trained users</p></div></div><div class="phase-card phase-2"><div class="phase-header"><div class="phase-title">Phase 2: Expansion</div><div class="phase-period">Months 7-12</div></div><div class="phase-content"><h4>Focus</h4><p>Scale across BUs</p><h4>Modules</h4><p>Monitoring, Compliance, Dashboards</p><h4>Target</h4><p>200+ trained users</p></div></div><div class="phase-card phase-3"><div class="phase-header"><div class="phase-title">Phase 3: Transform</div><div class="phase-period">Months 13-18</div></div><div class="phase-content"><h4>Focus</h4><p>Full automation, predictive AI</p><h4>Modules</h4><p>Agentic Actions, Predictive Models</p><h4>Target</h4><p>500+ trained users</p></div></div></div><div class="card" style="margin-top:30px"><h3 style="color:var(--primary);margin-bottom:15px">Phase 1 Quick Wins (90 Days)</h3><ol><li><strong>Risk Chatbot:</strong> Conversational AI for querying risk data</li><li><strong>Report Generator:</strong> Automate monthly risk summaries</li><li><strong>News Monitor:</strong> AI-powered emerging risk monitoring</li><li><strong>Contract Analyzer:</strong> AI contract review pilot</li><li><strong>Executive Dashboards:</strong> AI-enhanced risk dashboards</li></ol></div></section>
 
-<div class="page-break"></div>
+<section id="investment" class="section"><div class="section-header"><div class="section-number">12</div><h2 class="section-title">Investment & ROI</h2><p class="section-subtitle">18-24 month payback with strategic value beyond</p></div><table><tr><th>Category</th><th>Estimated Range</th></tr><tr><td><strong>Platform & Technology</strong></td><td>$800K - $1.2M (Cloud, AI APIs, integrations)</td></tr><tr><td><strong>Implementation Services</strong></td><td>$600K - $900K (Design, configuration, testing)</td></tr><tr><td><strong>Training & Change</strong></td><td>$200K - $300K (Curriculum, delivery)</td></tr><tr><td><strong>Ongoing Support</strong></td><td>$150K - $250K (Maintenance, enhancements)</td></tr><tr class="highlight-row"><td><strong>TOTAL</strong></td><td><strong>$1.75M - $2.65M</strong></td></tr></table><h3 style="margin:40px 0 20px;color:var(--primary)">Expected ROI</h3><div class="card-grid"><div class="card"><div class="card-icon" style="background:var(--gradient-3)">💰</div><h3>Efficiency Gains</h3><p>70-80% reduction → $300-500K annual savings</p></div><div class="card"><div class="card-icon" style="background:var(--gradient-3)">⚡</div><h3>Faster Response</h3><p>Real-time vs. semi-annual → Earlier mitigation</p></div><div class="card"><div class="card-icon" style="background:var(--gradient-3)">🎯</div><h3>Better Decisions</h3><p>AI insights → Improved risk-adjusted returns</p></div><div class="card"><div class="card-icon" style="background:var(--gradient-3)">✅</div><h3>Compliance</h3><p>Automated disclosures → Reduced penalties</p></div></div><p style="text-align:center;margin-top:25px;font-size:17px;color:var(--primary)"><strong>Estimated payback: 18-24 months</strong></p></section>
 
-<!-- SECTION 2: UNDERSTANDING AI -->
-<h1>2. Understanding GenAI & Agentic AI for Risk Management</h1>
+<section class="section"><div class="section-header"><div class="section-number">13</div><h2 class="section-title">AI Governance</h2><p class="section-subtitle">Responsible AI deployment with robust controls</p></div><div class="card-grid"><div class="card"><h3 style="color:var(--primary);margin-bottom:12px">AI Risk Framework</h3><ul><li><strong>Model Risk:</strong> Validation, testing, bias detection</li><li><strong>Data Risk:</strong> Quality, privacy, security</li><li><strong>Operational Risk:</strong> Availability, recovery</li><li><strong>Ethical Risk:</strong> Fairness, accountability</li></ul></div><div class="card"><h3 style="color:var(--primary);margin-bottom:12px">Responsible AI Principles</h3><ol><li><strong>Transparency:</strong> Explainable decisions</li><li><strong>Human Oversight:</strong> Critical approvals</li><li><strong>Auditability:</strong> Complete trail</li><li><strong>Privacy by Design:</strong> Data minimization</li></ol></div></div></section>
 
-<h2>2.1 Generative AI (GenAI)</h2>
-<p>Large Language Models (LLMs) that understand context, generate human-quality text, and reason through complex problems:</p>
-<ul>
-    <li><strong>Document Intelligence:</strong> Process contracts, policies, audit reports, and regulatory filings at scale</li>
-    <li><strong>Report Generation:</strong> Auto-create board presentations, risk summaries, and compliance disclosures</li>
-    <li><strong>Conversational Interface:</strong> Query risk data in natural language ("What are our top cyber risks?")</li>
-    <li><strong>Scenario Narratives:</strong> Generate detailed risk scenarios for stress testing</li>
-</ul>
-
-<h2>2.2 Agentic AI</h2>
-<p>Autonomous AI agents that can plan, execute multi-step tasks, use tools, and take actions:</p>
-<ul>
-    <li><strong>Continuous Monitoring:</strong> Agents scan news, social media, and market data 24/7 for emerging risks</li>
-    <li><strong>Workflow Automation:</strong> Trigger actions automatically when risk thresholds are breached</li>
-    <li><strong>Multi-Agent Collaboration:</strong> Specialized agents work together on complex risk analysis</li>
-    <li><strong>Self-Improvement:</strong> Systems learn from outcomes and refine risk models over time</li>
-</ul>
-
-<h2>2.3 Why Now for Ayala Land?</h2>
-<ol>
-    <li><strong>Mature ERM Foundation:</strong> Your Advanced (5.0) maturity provides processes and data infrastructure for AI deployment</li>
-    <li><strong>Scale & Complexity:</strong> 53 estates, 10,736 hectares land bank, ₱918.8B in assets—complexity AI can help manage</li>
-    <li><strong>Data Richness:</strong> Decades of property, financial, and operational data for training AI models</li>
-    <li><strong>Explicit AI Strategy:</strong> Your 2024 Integrated Report identifies AI as both opportunity and risk—this proposal addresses both</li>
-    <li><strong>Competitive Edge:</strong> First-mover advantage in AI-powered risk management in Philippine real estate</li>
-    <li><strong>Strong Financial Position:</strong> ₱28.2B net income (+15%), 0.73:1 net gearing provides investment capacity</li>
-</ol>
-
-<div class="page-break"></div>
-
-<!-- ALIGNMENT WITH ALI's 2024 KEY RISKS -->
-<h1>2A. Alignment with ALI's 2024 Key Risks</h1>
-
-<p>Our AI-powered ERM platform directly addresses the key risks identified in Ayala Land's 2024 Integrated Report:</p>
-
-<table>
-    <tr>
-        <th>ALI 2024 Key Risk</th>
-        <th>AI Platform Capability</th>
-    </tr>
-    <tr>
-        <td><strong>Project Execution & Timely Delivery</strong></td>
-        <td>AI Project Delay Predictor forecasts construction risks; Contract Risk Extraction automates vendor assessment</td>
-    </tr>
-    <tr>
-        <td><strong>Marginalization by Competitors</strong></td>
-        <td>AI Peer Benchmarking analyzes SM Prime, Megaworld, Robinson's Land positioning in real-time</td>
-    </tr>
-    <tr>
-        <td><strong>Organizational Risk</strong></td>
-        <td>AI monitors talent metrics, succession gaps; automates knowledge capture from departing experts</td>
-    </tr>
-    <tr>
-        <td><strong>Financial Risk</strong></td>
-        <td>Real-time monitoring of interest rates, FX, credit spreads; scenario modeling for funding strategies</td>
-    </tr>
-    <tr>
-        <td><strong>Economic & Country Risk</strong></td>
-        <td>Emerging Risk Radar scans geopolitical developments, regulatory changes, macro indicators</td>
-    </tr>
-    <tr>
-        <td><strong>Technology & Innovation Risk</strong></td>
-        <td>This proposal itself addresses the AI opportunity while establishing AI governance frameworks</td>
-    </tr>
-    <tr>
-        <td><strong>Business Continuity & Cyber Risk</strong></td>
-        <td>24/7 Cyber Threat Intelligence monitoring; Incident Response Agent automates crisis protocols</td>
-    </tr>
-    <tr>
-        <td><strong>Environmental/Climate Risks</strong></td>
-        <td>Climate Risk Modeling integrates typhoon tracks, flood maps across 53 estates; TCFD automation</td>
-    </tr>
-    <tr>
-        <td><strong>Strategy Risk</strong></td>
-        <td>AI-powered scenario planning; early warning on market corrections and demand shifts</td>
-    </tr>
-    <tr>
-        <td><strong>Government/Political Risk</strong></td>
-        <td>Regulatory Radar monitors SEC, PSE, BSP, DOLE, DENR for policy changes and impact assessment</td>
-    </tr>
-</table>
-
-<div class="page-break"></div>
-
-<!-- SECTION 3: PLATFORM ARCHITECTURE -->
-<h1>3. AI-Powered ERM Platform Architecture</h1>
-
-<h2>3.1 Platform Overview</h2>
-<table>
-    <tr>
-        <th>Layer</th>
-        <th>Components</th>
-        <th>Technology</th>
-    </tr>
-    <tr>
-        <td><strong>User Interface</strong></td>
-        <td>Risk Command Center, AI Assistant, Mobile App, Board Portal</td>
-        <td>React/Next.js, Natural Language UI, Power BI integration</td>
-    </tr>
-    <tr>
-        <td><strong>AI Engine</strong></td>
-        <td>GenAI Models, Agentic Orchestration, ML Risk Models, NLP Pipeline</td>
-        <td>GPT-4/Claude API, LangChain/AutoGen, Custom models, Vector DBs</td>
-    </tr>
-    <tr>
-        <td><strong>Data Platform</strong></td>
-        <td>Risk Data Lake, Knowledge Graph, Document Store, Real-time Streams</td>
-        <td>Snowflake/Databricks, Neo4j, Elasticsearch, Kafka</td>
-    </tr>
-    <tr>
-        <td><strong>Integration</strong></td>
-        <td>ERP Connectors, External Data Feeds, API Gateway, Event Bus</td>
-        <td>SAP/Oracle connectors, News APIs, Market data, REST/GraphQL</td>
-    </tr>
-    <tr>
-        <td><strong>Security</strong></td>
-        <td>AI Guardrails, Audit Logging, Access Control, Model Governance</td>
-        <td>Azure/AWS security, MLOps, Responsible AI frameworks</td>
-    </tr>
-</table>
-
-<h2>3.2 Six Core Modules</h2>
-<ol>
-    <li><strong>AI Risk Assessment & Identification</strong> — Automated risk discovery and quantification</li>
-    <li><strong>Automated Risk Review & Analysis</strong> — Intelligent document and data analysis</li>
-    <li><strong>Intelligent Risk Reporting & Dashboards</strong> — AI-generated insights and visualizations</li>
-    <li><strong>Autonomous Risk Action & Response</strong> — Agentic workflow automation</li>
-    <li><strong>AI Risk Monitoring & Early Warning</strong> — Predictive surveillance and alerts</li>
-    <li><strong>Compliance & Regulatory Intelligence</strong> — Automated compliance tracking</li>
-</ol>
-
-<div class="page-break"></div>
-
-<!-- SECTION 4: MODULE 1 -->
-<h1>4. Module 1: AI Risk Assessment & Identification</h1>
-
-<div class="purpose-box">
-    <strong>Purpose:</strong> Transform risk identification from periodic manual exercises to continuous AI-powered discovery and quantification.
-</div>
-
-<h2>4.1 Key Capabilities</h2>
-<table>
-    <tr>
-        <th>Capability</th>
-        <th>Description & AI Application</th>
-    </tr>
-    <tr>
-        <td><strong>Emerging Risk Radar</strong></td>
-        <td>AI agents continuously scan global news, research papers, social media, and industry reports to identify emerging risks. NLP extracts risk signals and classifies by relevance to ALI's business segments.</td>
-    </tr>
-    <tr>
-        <td><strong>Automated Risk Scoring</strong></td>
-        <td>ML models trained on historical data automatically score risks on likelihood and impact. Monte Carlo simulation for financial quantification with confidence intervals.</td>
-    </tr>
-    <tr>
-        <td><strong>Contract Risk Extraction</strong></td>
-        <td>GenAI reviews contracts (vendor, tenant, JV) to extract risk clauses, indemnification terms, liability limits, and compliance obligations automatically.</td>
-    </tr>
-    <tr>
-        <td><strong>Scenario Generator</strong></td>
-        <td>GenAI creates detailed risk scenarios including cascading effects, second-order impacts, and tail risks. Generates narrative descriptions for stress testing.</td>
-    </tr>
-    <tr>
-        <td><strong>Risk Interconnection Mapping</strong></td>
-        <td>Knowledge graph maps relationships between risks, controls, assets, and processes. AI identifies hidden correlations and concentration risks across the portfolio.</td>
-    </tr>
-    <tr>
-        <td><strong>Climate Risk Modeling</strong></td>
-        <td>AI integrates climate data, typhoon tracks, flood maps, and seismic data to assess physical risks across ALI's 53 estates. Supports TCFD scenario analysis.</td>
-    </tr>
-</table>
-
-<h2>4.2 Use Case: AI-Powered Project Risk Assessment</h2>
-<p><strong>Current:</strong> Manual risk assessment by project teams, reviewed quarterly</p>
-<p><strong>AI-Enabled:</strong></p>
-<ol>
-    <li>AI agent ingests project data (location, design, budget, timeline, contractors)</li>
-    <li>Automatically assesses 50+ risk factors including construction delays, cost overruns, permit issues</li>
-    <li>Generates risk score with confidence interval and explainable reasoning</li>
-    <li>Recommends specific mitigations based on similar past projects</li>
-    <li>Continuously updates assessment as project progresses</li>
-</ol>
-
-<div class="page-break"></div>
-
-<!-- SECTION 5: MODULE 2 -->
-<h1>5. Module 2: Automated Risk Review & Analysis</h1>
-
-<div class="purpose-box">
-    <strong>Purpose:</strong> Deploy AI agents to review documents, analyze data, and provide expert-level risk analysis at scale.
-</div>
-
-<h2>5.1 Key Capabilities</h2>
-<table>
-    <tr>
-        <th>Capability</th>
-        <th>Description & AI Application</th>
-    </tr>
-    <tr>
-        <td><strong>Intelligent Document Review</strong></td>
-        <td>GenAI reviews policies, procedures, audit reports, and incident reports. Extracts key findings, identifies gaps, benchmarks against best practices.</td>
-    </tr>
-    <tr>
-        <td><strong>Risk-Control Mapping</strong></td>
-        <td>AI automatically maps identified risks to existing controls, identifies control gaps, suggests remediation. Maintains dynamic risk-control matrix.</td>
-    </tr>
-    <tr>
-        <td><strong>Vendor Risk Analysis</strong></td>
-        <td>Agentic AI reviews vendor financials, news sentiment, compliance records, and performance history. Generates risk ratings for MDC's contractor network.</td>
-    </tr>
-    <tr>
-        <td><strong>Incident Root Cause Analysis</strong></td>
-        <td>When incidents occur, AI analyzes all available data to identify root causes, contributing factors, and systemic issues. Generates improvement recommendations.</td>
-    </tr>
-    <tr>
-        <td><strong>Peer Benchmarking</strong></td>
-        <td>AI analyzes public filings, news, and industry reports to benchmark ALI's risk profile against SM Prime, Megaworld, Robinson's Land, and regional peers.</td>
-    </tr>
-    <tr>
-        <td><strong>Risk Council Preparation</strong></td>
-        <td>AI automatically prepares briefing materials for Risk Council meetings—summarizing key changes, highlighting concerns, drafting discussion questions.</td>
-    </tr>
-</table>
-
-<h2>5.2 Conversational Risk Assistant</h2>
-<p>A natural language interface allowing any authorized user to query the risk system:</p>
-<ul>
-    <li>"What are the top risks for our Cebu estates?"</li>
-    <li>"Summarize cyber incidents in the past 6 months"</li>
-    <li>"Compare our interest rate exposure to last year"</li>
-    <li>"Draft a risk summary for the BROC on climate risks"</li>
-    <li>"What controls do we have for construction delays?"</li>
-</ul>
-
-<div class="page-break"></div>
-
-<!-- SECTION 6: MODULE 3 -->
-<h1>6. Module 3: Intelligent Risk Reporting & Dashboards</h1>
-
-<div class="purpose-box">
-    <strong>Purpose:</strong> Automate report generation and provide real-time, interactive risk intelligence to all stakeholders.
-</div>
-
-<h2>6.1 Automated Report Generation</h2>
-<table>
-    <tr>
-        <th>Report Type</th>
-        <th>Audience</th>
-        <th>AI Automation</th>
-    </tr>
-    <tr>
-        <td><strong>BROC Risk Report</strong></td>
-        <td>Board Risk Oversight Committee</td>
-        <td>Auto-generated executive summary, risk heatmaps, trend analysis, key recommendations with rationale</td>
-    </tr>
-    <tr>
-        <td><strong>Risk Council Briefing</strong></td>
-        <td>Risk Council, CRO</td>
-        <td>Detailed analysis, cross-functional insights, mitigation progress tracking, emerging risk alerts</td>
-    </tr>
-    <tr>
-        <td><strong>BU Risk Scorecards</strong></td>
-        <td>Business Unit Heads</td>
-        <td>Unit-specific KRIs, peer comparison, action item status, trend indicators</td>
-    </tr>
-    <tr>
-        <td><strong>Regulatory Reports</strong></td>
-        <td>SEC, PSE, Regulators</td>
-        <td>Auto-populated disclosure templates, TCFD reports, governance scorecards</td>
-    </tr>
-    <tr>
-        <td><strong>Flash Risk Alerts</strong></td>
-        <td>CEO, CRO, Executives</td>
-        <td>Real-time alerts with AI-generated context, impact assessment, recommended actions</td>
-    </tr>
-</table>
-
-<h2>6.2 Risk Command Center Dashboard</h2>
-<p>A centralized, real-time visualization platform featuring:</p>
-<ul>
-    <li><strong>Enterprise Risk Heatmap:</strong> Interactive view of all risks by category, severity, and trend</li>
-    <li><strong>Geographic Risk View:</strong> Map-based visualization of risks across 53 estates</li>
-    <li><strong>KRI Monitoring:</strong> Real-time Key Risk Indicator tracking with threshold alerts</li>
-    <li><strong>Mitigation Tracker:</strong> Status of all risk mitigation actions with AI-predicted completion</li>
-    <li><strong>Emerging Risk Feed:</strong> AI-curated stream of relevant emerging risks with relevance scores</li>
-    <li><strong>Natural Language Query:</strong> Ask questions in plain language and get instant visualizations</li>
-</ul>
-
-<div class="page-break"></div>
-
-<!-- SECTION 7: MODULE 4 -->
-<h1>7. Module 4: Autonomous Risk Action & Response</h1>
-
-<div class="purpose-box">
-    <strong>Purpose:</strong> Deploy agentic AI to orchestrate risk responses, automate workflows, and take preventive actions.
-</div>
-
-<h2>7.1 Agentic Automation Capabilities</h2>
-<table>
-    <tr>
-        <th>Agent Type</th>
-        <th>Autonomous Actions</th>
-    </tr>
-    <tr>
-        <td><strong>Risk Escalation Agent</strong></td>
-        <td>Automatically escalates risks when thresholds breached. Routes to appropriate stakeholders based on risk type, severity, and organizational hierarchy.</td>
-    </tr>
-    <tr>
-        <td><strong>Mitigation Orchestrator</strong></td>
-        <td>Creates mitigation action plans, assigns tasks to responsible parties, tracks progress, sends reminders. Can draft communications and documentation.</td>
-    </tr>
-    <tr>
-        <td><strong>Incident Response Agent</strong></td>
-        <td>When incidents occur, automatically activates response protocols, notifies crisis team, prepares situation reports, coordinates communication.</td>
-    </tr>
-    <tr>
-        <td><strong>Compliance Action Agent</strong></td>
-        <td>Monitors compliance deadlines, auto-generates required submissions, flags gaps, triggers remediation workflows for regulatory requirements.</td>
-    </tr>
-    <tr>
-        <td><strong>Vendor Risk Agent</strong></td>
-        <td>Continuously monitors vendor risk indicators. Can automatically trigger enhanced due diligence, request certifications, or flag for procurement review.</td>
-    </tr>
-    <tr>
-        <td><strong>Insurance Optimization Agent</strong></td>
-        <td>Analyzes risk exposure against insurance coverage, identifies gaps, recommends optimal coverage levels, supports renewal negotiations with data.</td>
-    </tr>
-</table>
-
-<h2>7.2 Human-in-the-Loop Controls</h2>
-<p>Critical principle: AI recommends and drafts, humans approve and execute for high-stakes decisions:</p>
-<ul>
-    <li><strong>Approval Workflows:</strong> Configurable approval requirements based on action type and materiality</li>
-    <li><strong>Audit Trail:</strong> Complete logging of all AI recommendations and human decisions</li>
-    <li><strong>Override Capability:</strong> Authorized users can override AI recommendations with documented rationale</li>
-    <li><strong>Escalation Paths:</strong> Clear escalation when AI confidence is low or situation is novel</li>
-</ul>
-
-<div class="page-break"></div>
-
-<!-- SECTION 8: MODULE 5 -->
-<h1>8. Module 5: AI Risk Monitoring & Early Warning</h1>
-
-<div class="purpose-box">
-    <strong>Purpose:</strong> Provide 24/7 intelligent surveillance with predictive early warning capabilities.
-</div>
-
-<h2>8.1 Monitoring Data Sources</h2>
-<table>
-    <tr>
-        <th>Data Source</th>
-        <th>Risk Signals</th>
-        <th>AI Analysis</th>
-    </tr>
-    <tr>
-        <td><strong>News & Media</strong></td>
-        <td>Company mentions, industry news, regulatory announcements</td>
-        <td>Sentiment analysis, entity extraction, relevance scoring</td>
-    </tr>
-    <tr>
-        <td><strong>Social Media</strong></td>
-        <td>Customer complaints, brand sentiment, viral issues</td>
-        <td>Real-time sentiment tracking, anomaly detection</td>
-    </tr>
-    <tr>
-        <td><strong>Financial Markets</strong></td>
-        <td>Interest rates, FX movements, credit spreads</td>
-        <td>Correlation analysis, threshold monitoring, scenario modeling</td>
-    </tr>
-    <tr>
-        <td><strong>Weather & Climate</strong></td>
-        <td>Typhoon tracks, flood warnings, earthquakes</td>
-        <td>Asset-specific impact assessment, BCP triggers</td>
-    </tr>
-    <tr>
-        <td><strong>Cyber Threat Intel</strong></td>
-        <td>Threat feeds, vulnerability disclosures, dark web</td>
-        <td>Threat relevance scoring, attack surface analysis</td>
-    </tr>
-    <tr>
-        <td><strong>Internal Systems</strong></td>
-        <td>ERP transactions, project metrics, HR data, incidents</td>
-        <td>Anomaly detection, pattern recognition, leading indicators</td>
-    </tr>
-</table>
-
-<h2>8.2 Predictive Early Warning System</h2>
-<p>AI models trained to predict risk materialization 3-6 months in advance:</p>
-<ul>
-    <li><strong>Project Delay Predictor:</strong> Forecasts construction delays based on weather, contractor performance, permit status</li>
-    <li><strong>Tenant Default Predictor:</strong> Identifies tenants at risk of default based on payment patterns, business indicators</li>
-    <li><strong>Market Correction Warning:</strong> Signals potential real estate market downturns based on leading indicators</li>
-    <li><strong>Regulatory Change Alert:</strong> Predicts upcoming regulatory changes based on government signals and peer actions</li>
-</ul>
-
-<div class="page-break"></div>
-
-<!-- SECTION 9: MODULE 6 -->
-<h1>9. Module 6: Compliance & Regulatory Intelligence</h1>
-
-<div class="purpose-box">
-    <strong>Purpose:</strong> Automate compliance monitoring, regulatory tracking, and disclosure preparation.
-</div>
-
-<h2>9.1 Regulatory Monitoring</h2>
-<ul>
-    <li><strong>Regulatory Radar:</strong> AI continuously monitors SEC, PSE, BSP, DOLE, DENR for new requirements</li>
-    <li><strong>Impact Assessment:</strong> Automatically assesses relevance and impact of new regulations to ALI</li>
-    <li><strong>Gap Analysis:</strong> Compares current practices against new requirements, identifies compliance gaps</li>
-    <li><strong>Deadline Tracking:</strong> Maintains regulatory calendar with automated reminders and escalations</li>
-</ul>
-
-<h2>9.2 Automated Disclosure Support</h2>
-<ul>
-    <li><strong>SEC Form 17-A/17-Q:</strong> Auto-populates risk disclosure sections based on current risk profile</li>
-    <li><strong>TCFD Reports:</strong> Generates climate risk disclosures aligned with Task Force recommendations</li>
-    <li><strong>I-ACGR:</strong> Supports Integrated Annual Corporate Governance Report preparation</li>
-    <li><strong>ASEAN CG Scorecard:</strong> Tracks compliance with ASEAN Corporate Governance criteria</li>
-</ul>
-
-<h2>9.3 Policy & Control Management</h2>
-<ul>
-    <li><strong>Policy Library:</strong> AI-indexed repository of all policies with version control and approval tracking</li>
-    <li><strong>Control Testing:</strong> Automated testing of key controls with exception reporting</li>
-    <li><strong>Attestation Management:</strong> Automates collection and tracking of management attestations</li>
-</ul>
-
-<div class="page-break"></div>
-
-<!-- SECTION 10: TRAINING -->
-<h1>10. GenAI Training & Capability Building Program</h1>
-
-<p>Technology alone is insufficient—success requires building organizational capability. We propose a comprehensive training program:</p>
-
-<h2>10.1 Training Curriculum</h2>
-<table>
-    <tr>
-        <th>Level</th>
-        <th>Audience</th>
-        <th>Duration</th>
-        <th>Topics</th>
-    </tr>
-    <tr>
-        <td><strong>Executive Awareness</strong></td>
-        <td>Board, C-Suite, BROC</td>
-        <td>Half-day workshop</td>
-        <td>AI fundamentals, strategic implications, governance, oversight role</td>
-    </tr>
-    <tr>
-        <td><strong>Risk Professional</strong></td>
-        <td>CRO, Risk Council, Risk Team</td>
-        <td>3-day intensive</td>
-        <td>Platform deep-dive, prompt engineering, AI validation, limitations</td>
-    </tr>
-    <tr>
-        <td><strong>Business User</strong></td>
-        <td>BU Heads, Project Managers</td>
-        <td>1-day workshop</td>
-        <td>Platform usage, risk tools, dashboard interpretation, escalation</td>
-    </tr>
-    <tr>
-        <td><strong>Technical</strong></td>
-        <td>IT, Data Analytics, CIO Team</td>
-        <td>5-day certification</td>
-        <td>Platform admin, model fine-tuning, integration management, MLOps</td>
-    </tr>
-    <tr>
-        <td><strong>AI Champions</strong></td>
-        <td>Selected from each BU</td>
-        <td>Ongoing program</td>
-        <td>Advanced AI skills, change management, use case identification</td>
-    </tr>
-</table>
-
-<h2>10.2 Ongoing Enablement</h2>
-<ul>
-    <li><strong>AI Literacy Program:</strong> Quarterly updates on AI developments and best practices</li>
-    <li><strong>Use Case Library:</strong> Documented examples of successful AI applications in risk management</li>
-    <li><strong>Community of Practice:</strong> Cross-BU forum for sharing learnings and innovations</li>
-    <li><strong>Certification Path:</strong> Formal certification for AI Risk Management proficiency</li>
-</ul>
-
-<div class="page-break"></div>
-
-<!-- SECTION 11: IMPLEMENTATION -->
-<h1>11. Implementation Roadmap</h1>
-
-<h2>11.1 Three-Phase Approach</h2>
-<table>
-    <tr>
-        <th>Phase</th>
-        <th>Phase 1: Foundation<br>(Months 1-6)</th>
-        <th>Phase 2: Expansion<br>(Months 7-12)</th>
-        <th>Phase 3: Transformation<br>(Months 13-18)</th>
-    </tr>
-    <tr>
-        <td><strong>Focus</strong></td>
-        <td>Core platform, quick wins, prove value</td>
-        <td>Scale across BUs, advanced capabilities</td>
-        <td>Full automation, predictive AI, agentic</td>
-    </tr>
-    <tr>
-        <td><strong>Modules</strong></td>
-        <td>Risk Assistant, Basic Reporting, Document Review</td>
-        <td>Monitoring, Compliance, Enhanced Dashboards</td>
-        <td>Agentic Actions, Predictive Models, Full Integration</td>
-    </tr>
-    <tr>
-        <td><strong>Pilot Scope</strong></td>
-        <td>Corporate Risk Team + 1 BU</td>
-        <td>All core BUs, Risk Council</td>
-        <td>Enterprise-wide, Board-level</td>
-    </tr>
-    <tr>
-        <td><strong>Users</strong></td>
-        <td>50+ trained users</td>
-        <td>200+ trained users</td>
-        <td>500+ trained users</td>
-    </tr>
-</table>
-
-<h2>11.2 Phase 1 Quick Wins (First 90 Days)</h2>
-<ol>
-    <li><strong>Risk Chatbot:</strong> Deploy conversational AI for querying risk data</li>
-    <li><strong>Report Generator:</strong> Automate monthly risk summary generation</li>
-    <li><strong>News Monitor:</strong> Set up AI-powered emerging risk monitoring</li>
-    <li><strong>Contract Analyzer:</strong> Pilot AI contract review on new vendor agreements</li>
-    <li><strong>Executive Dashboards:</strong> Launch basic AI-enhanced risk dashboards</li>
-</ol>
-
-<div class="page-break"></div>
-
-<!-- SECTION 12: INVESTMENT -->
-<h1>12. Investment & ROI Analysis</h1>
-
-<h2>12.1 Investment Summary (18-Month Program)</h2>
-<table>
-    <tr>
-        <th>Investment Category</th>
-        <th>Estimated Range</th>
-    </tr>
-    <tr>
-        <td><strong>Platform & Technology</strong></td>
-        <td>$800K - $1.2M (Cloud infrastructure, AI APIs, integrations)</td>
-    </tr>
-    <tr>
-        <td><strong>Implementation Services</strong></td>
-        <td>$600K - $900K (Design, configuration, customization, testing)</td>
-    </tr>
-    <tr>
-        <td><strong>Training & Change Management</strong></td>
-        <td>$200K - $300K (Curriculum development, delivery, champions)</td>
-    </tr>
-    <tr>
-        <td><strong>Ongoing Support (Year 1)</strong></td>
-        <td>$150K - $250K (Maintenance, enhancements, support)</td>
-    </tr>
-    <tr class="highlight-row">
-        <td><strong>TOTAL INVESTMENT</strong></td>
-        <td><strong>$1.75M - $2.65M</strong></td>
-    </tr>
-</table>
-
-<h2>12.2 Expected ROI & Value Drivers</h2>
-<ul>
-    <li><strong>Efficiency Gains:</strong> 70-80% reduction in manual effort → $300-500K annual savings</li>
-    <li><strong>Faster Response:</strong> Real-time vs. semi-annual → Earlier risk mitigation, reduced losses</li>
-    <li><strong>Better Decisions:</strong> AI-powered insights → Improved risk-adjusted returns on investments</li>
-    <li><strong>Regulatory Compliance:</strong> Automated disclosures → Reduced compliance costs and penalties</li>
-    <li><strong>Competitive Advantage:</strong> AI-native risk function → Enhanced stakeholder confidence</li>
-</ul>
-
-<p>Estimated payback period: 18-24 months based on efficiency gains alone, with additional strategic value from improved risk outcomes.</p>
-
-<div class="page-break"></div>
-
-<!-- SECTION 13: GOVERNANCE -->
-<h1>13. Governance & Risk Management for AI</h1>
-
-<h2>13.1 AI Risk Framework</h2>
-<p>Deploying AI introduces its own risks that must be managed:</p>
-<ul>
-    <li><strong>Model Risk:</strong> Validation, testing, performance monitoring, bias detection</li>
-    <li><strong>Data Risk:</strong> Quality, privacy, security, lineage, regulatory compliance</li>
-    <li><strong>Operational Risk:</strong> Availability, accuracy, failure modes, recovery</li>
-    <li><strong>Ethical Risk:</strong> Fairness, transparency, accountability, human oversight</li>
-</ul>
-
-<h2>13.2 Responsible AI Principles</h2>
-<ol>
-    <li><strong>Transparency:</strong> All AI decisions are explainable with clear reasoning</li>
-    <li><strong>Human Oversight:</strong> Critical decisions require human approval</li>
-    <li><strong>Auditability:</strong> Complete audit trail of all AI recommendations and actions</li>
-    <li><strong>Bias Mitigation:</strong> Regular testing for bias in AI outputs</li>
-    <li><strong>Privacy by Design:</strong> Data minimization, encryption, access controls</li>
-    <li><strong>Continuous Improvement:</strong> Feedback loops to improve AI accuracy over time</li>
-</ol>
-
-<h2>13.3 Governance Structure</h2>
-<ul>
-    <li><strong>AI Steering Committee:</strong> Executive oversight of AI initiatives (quarterly)</li>
-    <li><strong>Model Risk Management:</strong> Validation and monitoring of all AI models</li>
-    <li><strong>Data Governance:</strong> Policies for data quality, access, and privacy</li>
-    <li><strong>Ethics Review:</strong> Assessment of AI applications for ethical concerns</li>
-</ul>
-
-<div class="page-break"></div>
-
-<!-- SECTION 14: WHY PARTNER WITH US -->
-<h1>14. Why Partner With Us</h1>
-
-<h2>14.1 About KIROS Intelligence Group</h2>
-
-<p>KIROS Intelligence Group is a Strategic Intelligence Platform spanning the entire AI innovation lifecycle—from strategic advisory through breakthrough research, active company building, and growth capital investment. Founded in 2004, we combine the rigor of tier-one consulting with the execution excellence of venture studios.</p>
-
-<h3>Four Specialized Divisions</h3>
-<ul>
-    <li><strong>Kiros Strategic Consulting:</strong> C-suite advisory & AI transformation strategy for Fortune 500 clients</li>
-    <li><strong>Kiros Innovation Labs:</strong> Breakthrough R&D in agentic intelligence and neuro-symbolic computing</li>
-    <li><strong>Kiros Venture Studio:</strong> Active company building with seed investments</li>
-    <li><strong>Kiros Capital Partners:</strong> Growth investments with 45%+ portfolio IRR</li>
-</ul>
-
-<p><strong>Global Presence:</strong> Singapore (APAC) • Auckland • Kuala Lumpur • Seattle • London</p>
-<p><strong>Website:</strong> kiros-intelligence.com</p>
-
-<h2>14.2 Engagement Lead</h2>
-
-<p><strong style="font-size: 14pt; color: #0D47A1;">Dr. Elias Kairos Chen</strong> <span style="color: #666;">PhD, MBA, MPA, CPA (AUS)</span></p>
-<p style="color: #1565C0; margin-bottom: 15px;">Managing Partner, KIROS Intelligence Group</p>
-
-<p>Dr. Chen is a visionary futurist, author, and expert in artificial intelligence, strategic finance, and transformative business innovation. With advanced degrees in AI, Business, Finance, and Engineering, he combines deep technical expertise with sharp business acumen. He has founded and advised numerous technology-driven ventures, developing intelligent agents that integrate AI-driven processes with human-centred decision-making.</p>
-
-<p><strong>Website:</strong> dreliaskairos-chen.com</p>
-
-<h2>14.3 Engagement Model</h2>
-<ul>
-    <li><strong>Dedicated Team:</strong> Senior consultants with AI and risk management expertise</li>
-    <li><strong>Knowledge Transfer:</strong> Building internal ALI capabilities, not creating dependencies</li>
-    <li><strong>Agile Delivery:</strong> Iterative approach with regular demos and feedback cycles</li>
-    <li><strong>Executive Sponsorship:</strong> Direct engagement with CRO and BROC throughout</li>
-</ul>
-
-<h2>14.4 Next Steps</h2>
-<ol>
-    <li><strong>Executive Briefing:</strong> Present this proposal to CRO and key stakeholders (1-2 hours)</li>
-    <li><strong>Discovery Workshop:</strong> Deep-dive into current ERM processes and data landscape (2 days)</li>
-    <li><strong>Proof of Concept:</strong> Develop working prototype of 2-3 key capabilities (4-6 weeks)</li>
-    <li><strong>Business Case:</strong> Refine investment and ROI analysis based on ALI-specific data</li>
-    <li><strong>Full Program Kickoff:</strong> Launch Phase 1 implementation</li>
-</ol>
-
-<p>We are excited about the opportunity to partner with Ayala Land, Inc. on this transformative journey. The combination of ALI's mature ERM foundation and cutting-edge AI capabilities can create a new standard for risk management in the Philippine and ASEAN real estate industry.</p>
-
-<p class="glb-tag">A GLB Group APAC Strategic Initiative</p>
-
-<div class="footer">
-    — END OF PROPOSAL —
-</div>
-
-</div>
-
+<section id="partner" class="section" style="padding-bottom:0"><div class="partner-section"><h2>14. Why Partner With Us</h2><div class="partner-grid"><div><h3>About KIROS Intelligence Group</h3><p>KIROS Intelligence Group is a Strategic Intelligence Platform spanning the entire AI innovation lifecycle—from strategic advisory through breakthrough research, active company building, and growth capital investment. Founded in 2004, we combine the rigor of tier-one consulting with the execution excellence of venture studios.</p><h4 style="color:var(--gold);font-size:13px;margin:22px 0 12px;text-transform:uppercase;letter-spacing:1px">Four Specialized Divisions</h4><ul><li><strong>Kiros Strategic Consulting:</strong> C-suite advisory & AI transformation for Fortune 500</li><li><strong>Kiros Innovation Labs:</strong> Breakthrough R&D in agentic intelligence</li><li><strong>Kiros Venture Studio:</strong> Active company building with seed investments</li><li><strong>Kiros Capital Partners:</strong> Growth investments with 45%+ IRR</li></ul><p style="margin-top:22px"><strong style="color:var(--gold)">Global Presence:</strong> Singapore (APAC) • Auckland • Kuala Lumpur • Seattle • London</p></div><div><h3>Engagement Lead</h3><div class="partner-info"><div class="partner-name">Dr. Elias Kairos Chen</div><div class="partner-credentials">PhD, MBA, MPA, CPA (AUS)</div><div class="partner-title">Managing Partner, KIROS Intelligence Group</div><p>Dr. Chen is a visionary futurist, author, and expert in artificial intelligence, strategic finance, and transformative business innovation. With advanced degrees in AI, Business, Finance, and Engineering, he combines deep technical expertise with sharp business acumen.</p></div><h3 style="margin-top:35px">Engagement Model</h3><ul><li><strong>Dedicated Team:</strong> Senior consultants with AI and risk expertise</li><li><strong>Knowledge Transfer:</strong> Building internal capabilities</li><li><strong>Agile Delivery:</strong> Iterative with regular demos</li><li><strong>Executive Sponsorship:</strong> Direct CRO and BROC engagement</li></ul></div></div><div class="next-steps"><h3>Next Steps</h3><ol><li><strong>Executive Briefing:</strong> Present to CRO and stakeholders (1-2 hours)</li><li><strong>Discovery Workshop:</strong> Deep-dive into ERM processes (2 days)</li><li><strong>Proof of Concept:</strong> Prototype of 2-3 capabilities (4-6 weeks)</li><li><strong>Business Case:</strong> Refine ROI with ALI-specific data</li><li><strong>Program Kickoff:</strong> Launch Phase 1</li></ol></div><p style="text-align:center;margin-top:35px;font-size:16px;color:white">We are excited to partner with Ayala Land on this transformative journey.</p></div></section>
+</main>
+<footer class="footer"><div class="footer-brand">A GLB GROUP APAC STRATEGIC INITIATIVE</div><p>© 2026 KIROS Intelligence Group. Strictly Confidential.</p></footer>
+<script>document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',function(e){e.preventDefault();document.querySelector(this.getAttribute('href')).scrollIntoView({behavior:'smooth'})})});</script>
 </body>
 </html>
