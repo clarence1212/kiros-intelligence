@@ -1,0 +1,1597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SKYFORGE — AI-Powered Drone Intelligence | New Zealand</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:ital,wght@0,300;0,400;0,600;0,700;1,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #050a0e;
+    --navy: #081420;
+    --steel: #0d2035;
+    --electric: #00e5ff;
+    --acid: #b4ff39;
+    --white: #f0f4f7;
+    --muted: #6b8fa8;
+    --danger: #ff3d57;
+    --grid: rgba(0,229,255,0.04);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CUSTOM CURSOR */
+  .cursor {
+    position: fixed;
+    width: 12px; height: 12px;
+    background: var(--electric);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s, width 0.2s, height 0.2s, background 0.2s;
+    mix-blend-mode: screen;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 40px; height: 40px;
+    border: 1px solid rgba(0,229,255,0.4);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.15s ease-out, width 0.3s, height 0.3s;
+  }
+  body:hover .cursor { width: 12px; }
+
+  /* GRID BACKGROUND */
+  .grid-bg {
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* SCAN LINE EFFECT */
+  .scanlines {
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.08) 2px,
+      rgba(0,0,0,0.08) 4px
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 60px;
+    background: linear-gradient(to bottom, rgba(5,10,14,0.95), transparent);
+    backdrop-filter: blur(2px);
+  }
+
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 0.15em;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .logo span { color: var(--electric); }
+
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--electric); }
+
+  .nav-cta {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--black);
+    background: var(--electric);
+    border: none;
+    padding: 10px 24px;
+    cursor: none;
+    transition: background 0.2s, transform 0.1s;
+  }
+  .nav-cta:hover { background: var(--acid); transform: scale(1.02); }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    z-index: 2;
+    overflow: hidden;
+  }
+
+  .hero-content {
+    padding: 0 60px;
+    max-width: 900px;
+    animation: heroIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  @keyframes heroIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    color: var(--electric);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .hero-tag::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--electric);
+  }
+
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(5rem, 12vw, 10rem);
+    line-height: 0.9;
+    letter-spacing: 0.02em;
+    margin-bottom: 32px;
+  }
+
+  .hero h1 .line2 {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(0,229,255,0.5);
+  }
+
+  .hero h1 .accent { color: var(--electric); }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--muted);
+    max-width: 520px;
+    margin-bottom: 48px;
+  }
+
+  .hero-sub strong { color: var(--white); font-weight: 600; }
+
+  .hero-btns {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--black);
+    background: var(--electric);
+    border: none;
+    padding: 16px 36px;
+    cursor: none;
+    transition: background 0.2s, transform 0.1s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--acid); }
+
+  .btn-outline {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--electric);
+    background: transparent;
+    border: 1px solid var(--electric);
+    padding: 16px 36px;
+    cursor: none;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .btn-outline:hover { background: rgba(0,229,255,0.08); }
+
+  /* DRONE SVG ANIMATION */
+  .hero-visual {
+    position: absolute;
+    right: -100px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 700px;
+    height: 700px;
+    opacity: 0;
+    animation: fadeInDrone 1.5s 0.5s forwards;
+  }
+  @keyframes fadeInDrone {
+    to { opacity: 1; }
+  }
+
+  .drone-body {
+    animation: droneHover 4s ease-in-out infinite;
+  }
+  @keyframes droneHover {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    25% { transform: translateY(-12px) rotate(1deg); }
+    75% { transform: translateY(8px) rotate(-1deg); }
+  }
+
+  .rotor { animation: spin 0.3s linear infinite; transform-origin: center; }
+  .rotor2 { animation: spin 0.3s linear infinite reverse; transform-origin: center; }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .scan-ring {
+    animation: scanPulse 3s ease-in-out infinite;
+    transform-origin: center;
+  }
+  @keyframes scanPulse {
+    0%, 100% { opacity: 0; transform: scale(0.5); }
+    50% { opacity: 0.6; transform: scale(1.2); }
+  }
+
+  /* STATS BAR */
+  .stats-bar {
+    position: relative;
+    z-index: 2;
+    background: var(--steel);
+    border-top: 1px solid rgba(0,229,255,0.15);
+    border-bottom: 1px solid rgba(0,229,255,0.15);
+    padding: 32px 60px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+  }
+
+  .stat {
+    text-align: center;
+    padding: 0 20px;
+    border-right: 1px solid rgba(255,255,255,0.06);
+  }
+  .stat:last-child { border-right: none; }
+
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem;
+    color: var(--electric);
+    line-height: 1;
+    display: block;
+  }
+
+  .stat-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* SECTION COMMON */
+  section {
+    position: relative;
+    z-index: 2;
+  }
+
+  .section-header {
+    margin-bottom: 80px;
+  }
+
+  .section-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: var(--electric);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+  }
+
+  .section-title .ghost {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(240,244,247,0.15);
+  }
+
+  /* SERVICES */
+  .services {
+    padding: 120px 60px;
+    background: var(--navy);
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .service-card {
+    background: var(--steel);
+    padding: 48px 40px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), background 0.3s;
+    cursor: none;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 2px;
+    background: var(--electric);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-card:hover { background: #102840; transform: translateY(-4px); }
+
+  .service-card.ai-card::before { background: var(--acid); }
+  .service-card.defence-card::before { background: var(--danger); }
+
+  .service-icon {
+    font-size: 2.5rem;
+    margin-bottom: 24px;
+    display: block;
+  }
+
+  .service-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border: 1px solid;
+    display: inline-block;
+    margin-bottom: 20px;
+  }
+  .service-tag.commercial { color: var(--electric); border-color: var(--electric); }
+  .service-tag.ai-tag { color: var(--acid); border-color: var(--acid); }
+  .service-tag.defence { color: var(--danger); border-color: var(--danger); }
+  .service-tag.govt { color: #ff9f43; border-color: #ff9f43; }
+
+  .service-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 0.05em;
+    margin-bottom: 16px;
+    line-height: 1;
+  }
+
+  .service-card p {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--muted);
+  }
+
+  .service-num {
+    position: absolute;
+    bottom: 32px;
+    right: 32px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 4rem;
+    color: rgba(255,255,255,0.04);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  /* AI ADVANTAGE */
+  .ai-section {
+    padding: 120px 60px;
+    background: var(--black);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: center;
+  }
+
+  .ai-left .section-title { margin-bottom: 24px; }
+
+  .ai-left p {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--muted);
+    margin-bottom: 40px;
+  }
+
+  .ai-features {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .ai-feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 24px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    transition: all 0.2s;
+    cursor: none;
+  }
+
+  .ai-feature:hover { padding-left: 8px; }
+
+  .ai-feature-icon {
+    width: 42px;
+    height: 42px;
+    background: rgba(180,255,57,0.1);
+    border: 1px solid rgba(180,255,57,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+
+  .ai-feature-text h4 {
+    font-family: 'Barlow', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 4px;
+    color: var(--white);
+  }
+  .ai-feature-text p {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* AI VISUAL PANEL */
+  .ai-right {
+    position: relative;
+  }
+
+  .ai-panel {
+    background: var(--steel);
+    border: 1px solid rgba(0,229,255,0.15);
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ai-panel::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 30%, rgba(180,255,57,0.05), transparent 60%);
+    animation: panelGlow 5s ease-in-out infinite alternate;
+  }
+
+  @keyframes panelGlow {
+    from { opacity: 0.5; }
+    to { opacity: 1; }
+  }
+
+  .panel-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.25em;
+    color: var(--acid);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .panel-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(180,255,57,0.2);
+  }
+
+  .data-stream {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--acid);
+    line-height: 2;
+    opacity: 0.8;
+  }
+
+  .data-line {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .data-line .key { color: var(--muted); }
+  .data-line .val { color: var(--acid); }
+  .data-line .val.live::after {
+    content: ' ●';
+    animation: blink 1s step-end infinite;
+  }
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+
+  .progress-bars { margin-top: 24px; }
+  .prog-item { margin-bottom: 16px; }
+  .prog-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .prog-bar {
+    height: 3px;
+    background: rgba(255,255,255,0.06);
+    position: relative;
+    overflow: hidden;
+  }
+  .prog-fill {
+    height: 100%;
+    background: var(--acid);
+    animation: fillBar 2s cubic-bezier(0.16,1,0.3,1) forwards;
+    transform-origin: left;
+    transform: scaleX(0);
+  }
+  @keyframes fillBar {
+    to { transform: scaleX(1); }
+  }
+
+  /* SECTORS */
+  .sectors {
+    padding: 120px 60px;
+    background: var(--navy);
+  }
+
+  .sectors-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+    margin-top: 80px;
+  }
+
+  .sector-item {
+    position: relative;
+    height: 280px;
+    overflow: hidden;
+    cursor: none;
+    background: var(--steel);
+  }
+
+  .sector-bg {
+    position: absolute;
+    inset: 0;
+    font-size: 8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.06;
+    transition: opacity 0.3s, transform 0.5s;
+  }
+
+  .sector-item:hover .sector-bg {
+    opacity: 0.12;
+    transform: scale(1.1);
+  }
+
+  .sector-content {
+    position: absolute;
+    inset: 0;
+    padding: 48px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .sector-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--electric);
+    margin-bottom: 8px;
+  }
+
+  .sector-item h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    letter-spacing: 0.05em;
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+
+  .sector-item p {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.6;
+    max-width: 380px;
+  }
+
+  .sector-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(5,10,14,0.9) 0%, transparent 60%);
+  }
+
+  /* GOVERNMENT SECTION */
+  .govt-section {
+    padding: 120px 60px;
+    background: var(--black);
+  }
+
+  .govt-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 80px;
+  }
+
+  .govt-card {
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 40px 32px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s;
+    cursor: none;
+  }
+
+  .govt-card:hover { border-color: rgba(255,61,87,0.4); }
+
+  .govt-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--danger), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .govt-card:hover::after { opacity: 1; }
+
+  .govt-icon {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .govt-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 0.05em;
+    margin-bottom: 12px;
+  }
+
+  .govt-card p {
+    font-size: 0.85rem;
+    line-height: 1.7;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+
+  .govt-value {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    color: var(--danger);
+    text-transform: uppercase;
+  }
+
+  /* TECH STACK */
+  .tech-section {
+    padding: 80px 60px;
+    background: var(--steel);
+    border-top: 1px solid rgba(0,229,255,0.08);
+    border-bottom: 1px solid rgba(0,229,255,0.08);
+  }
+
+  .tech-scroll {
+    display: flex;
+    gap: 60px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 40px;
+  }
+
+  .tech-item {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+    transition: color 0.2s;
+  }
+  .tech-item:hover { color: var(--electric); }
+  .tech-item::before {
+    content: '◆';
+    color: var(--electric);
+    font-size: 0.5rem;
+  }
+
+  /* PROCESS */
+  .process {
+    padding: 120px 60px;
+    background: var(--navy);
+  }
+
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    margin-top: 80px;
+    position: relative;
+  }
+
+  .process-steps::before {
+    content: '';
+    position: absolute;
+    top: 32px;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--electric), transparent);
+    z-index: 0;
+  }
+
+  .step {
+    text-align: center;
+    padding: 0 16px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .step-num {
+    width: 64px;
+    height: 64px;
+    border: 1px solid var(--electric);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--electric);
+    background: var(--navy);
+    position: relative;
+    transition: all 0.3s;
+  }
+
+  .step:hover .step-num {
+    background: var(--electric);
+    color: var(--black);
+  }
+
+  .step h4 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+
+  .step p {
+    font-size: 0.78rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* CONTACT / CTA */
+  .cta-section {
+    padding: 140px 60px;
+    background: var(--black);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(0,229,255,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-section h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 8vw, 7rem);
+    line-height: 0.95;
+    margin-bottom: 24px;
+  }
+
+  .cta-section h2 .ghost {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255,255,255,0.15);
+  }
+
+  .cta-section p {
+    font-size: 1rem;
+    color: var(--muted);
+    max-width: 500px;
+    margin: 0 auto 48px;
+    line-height: 1.7;
+  }
+
+  .cta-btns {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--navy);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 60px;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 60px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .footer-brand .logo { display: block; margin-bottom: 16px; }
+  .footer-brand p {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 260px;
+  }
+
+  .footer-col h5 {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--electric);
+    margin-bottom: 20px;
+  }
+
+  .footer-col ul { list-style: none; }
+  .footer-col li {
+    margin-bottom: 10px;
+  }
+  .footer-col a {
+    font-size: 0.85rem;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-col a:hover { color: var(--white); }
+
+  .footer-bottom {
+    background: var(--black);
+    padding: 20px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.04);
+    position: relative;
+    z-index: 2;
+  }
+
+  .footer-bottom p {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .cert-badges {
+    display: flex;
+    gap: 12px;
+  }
+
+  .badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.5rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--muted);
+  }
+
+  /* SCROLL REVEAL */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  /* Noise texture overlay */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 3;
+    opacity: 0.4;
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    nav { padding: 20px 30px; }
+    .hero-content { padding: 0 30px; }
+    .hero-visual { display: none; }
+    .services { padding: 80px 30px; }
+    .services-grid { grid-template-columns: 1fr; }
+    .ai-section { padding: 80px 30px; grid-template-columns: 1fr; gap: 60px; }
+    .sectors { padding: 80px 30px; }
+    .sectors-grid { grid-template-columns: 1fr; }
+    .govt-section { padding: 80px 30px; }
+    .govt-grid { grid-template-columns: 1fr; }
+    .process { padding: 80px 30px; }
+    .process-steps { grid-template-columns: 1fr 1fr; gap: 40px; }
+    .process-steps::before { display: none; }
+    .cta-section { padding: 100px 30px; }
+    footer { padding: 60px 30px; grid-template-columns: 1fr 1fr; gap: 40px; }
+    .footer-bottom { padding: 20px 30px; flex-direction: column; gap: 10px; text-align: center; }
+    .stats-bar { padding: 32px 30px; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .tech-section { padding: 60px 30px; }
+    .sectors { padding: 80px 30px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="grid-bg"></div>
+<div class="scanlines"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">SKY<span>FORGE</span></a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#ai">AI Edge</a></li>
+    <li><a href="#sectors">Sectors</a></li>
+    <li><a href="#defence">Defence</a></li>
+    <li><a href="#process">Process</a></li>
+  </ul>
+  <button class="nav-cta">Get Briefed</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-tag">New Zealand · AI-Powered · CAA Part 102 Certified</div>
+    <h1>
+      AERIAL<br>
+      <span class="line2">INTEL</span><br>
+      <span class="accent">REDE</span>FINED
+    </h1>
+    <p class="hero-sub">
+      SKYFORGE combines <strong>precision drone surveying</strong> with <strong>AI-driven data intelligence</strong> — delivering actionable insights for construction, agriculture, infrastructure, and defence across New Zealand and the Pacific.
+    </p>
+    <div class="hero-btns">
+      <a href="#services" class="btn-primary">Explore Services</a>
+      <a href="#ai" class="btn-outline">Our AI Advantage</a>
+    </div>
+  </div>
+
+  <!-- Animated Drone SVG -->
+  <div class="hero-visual">
+    <svg viewBox="0 0 700 700" xmlns="http://www.w3.org/2000/svg">
+      <!-- Scan rings -->
+      <circle class="scan-ring" cx="350" cy="350" r="200" fill="none" stroke="#00e5ff" stroke-width="0.5" opacity="0.4"/>
+      <circle class="scan-ring" cx="350" cy="350" r="260" fill="none" stroke="#00e5ff" stroke-width="0.3" opacity="0.2" style="animation-delay: 1s"/>
+      <circle class="scan-ring" cx="350" cy="350" r="320" fill="none" stroke="#00e5ff" stroke-width="0.2" opacity="0.1" style="animation-delay: 2s"/>
+
+      <!-- Grid lines -->
+      <line x1="350" y1="100" x2="350" y2="600" stroke="#00e5ff" stroke-width="0.3" opacity="0.1"/>
+      <line x1="100" y1="350" x2="600" y2="350" stroke="#00e5ff" stroke-width="0.3" opacity="0.1"/>
+
+      <!-- Crosshair -->
+      <circle cx="350" cy="350" r="8" fill="none" stroke="#00e5ff" stroke-width="1" opacity="0.6"/>
+      <line x1="342" y1="350" x2="330" y2="350" stroke="#00e5ff" stroke-width="1" opacity="0.6"/>
+      <line x1="358" y1="350" x2="370" y2="350" stroke="#00e5ff" stroke-width="1" opacity="0.6"/>
+      <line x1="350" y1="342" x2="350" y2="330" stroke="#00e5ff" stroke-width="1" opacity="0.6"/>
+      <line x1="350" y1="358" x2="350" y2="370" stroke="#00e5ff" stroke-width="1" opacity="0.6"/>
+
+      <g class="drone-body">
+        <!-- Drone frame arms -->
+        <line x1="350" y1="350" x2="220" y2="220" stroke="#00e5ff" stroke-width="2" opacity="0.6"/>
+        <line x1="350" y1="350" x2="480" y2="220" stroke="#00e5ff" stroke-width="2" opacity="0.6"/>
+        <line x1="350" y1="350" x2="220" y2="480" stroke="#00e5ff" stroke-width="2" opacity="0.6"/>
+        <line x1="350" y1="350" x2="480" y2="480" stroke="#00e5ff" stroke-width="2" opacity="0.6"/>
+
+        <!-- Motor mounts -->
+        <circle cx="220" cy="220" r="30" fill="#081420" stroke="#00e5ff" stroke-width="1.5" opacity="0.8"/>
+        <circle cx="480" cy="220" r="30" fill="#081420" stroke="#00e5ff" stroke-width="1.5" opacity="0.8"/>
+        <circle cx="220" cy="480" r="30" fill="#081420" stroke="#00e5ff" stroke-width="1.5" opacity="0.8"/>
+        <circle cx="480" cy="480" r="30" fill="#081420" stroke="#00e5ff" stroke-width="1.5" opacity="0.8"/>
+
+        <!-- Rotors -->
+        <g class="rotor" style="transform-origin: 220px 220px">
+          <ellipse cx="220" cy="220" rx="55" ry="4" fill="rgba(0,229,255,0.2)" stroke="#00e5ff" stroke-width="0.5"/>
+        </g>
+        <g class="rotor2" style="transform-origin: 480px 220px">
+          <ellipse cx="480" cy="220" rx="55" ry="4" fill="rgba(0,229,255,0.2)" stroke="#00e5ff" stroke-width="0.5"/>
+        </g>
+        <g class="rotor" style="transform-origin: 220px 480px">
+          <ellipse cx="220" cy="480" rx="55" ry="4" fill="rgba(0,229,255,0.2)" stroke="#00e5ff" stroke-width="0.5"/>
+        </g>
+        <g class="rotor2" style="transform-origin: 480px 480px">
+          <ellipse cx="480" cy="480" rx="55" ry="4" fill="rgba(0,229,255,0.2)" stroke="#00e5ff" stroke-width="0.5"/>
+        </g>
+
+        <!-- Body -->
+        <rect x="305" y="305" width="90" height="90" fill="#0d2035" stroke="#00e5ff" stroke-width="1.5" rx="4"/>
+        <rect x="320" y="320" width="60" height="60" fill="#081420" stroke="rgba(0,229,255,0.3)" stroke-width="0.5" rx="2"/>
+
+        <!-- Camera gimbal -->
+        <circle cx="350" cy="380" r="16" fill="#050a0e" stroke="#b4ff39" stroke-width="1.5"/>
+        <circle cx="350" cy="380" r="8" fill="#b4ff39" opacity="0.4"/>
+
+        <!-- LED indicators -->
+        <circle cx="330" cy="330" r="3" fill="#b4ff39" opacity="0.9"/>
+        <circle cx="370" cy="330" r="3" fill="#ff3d57" opacity="0.9"/>
+
+        <!-- Data labels -->
+        <text x="160" y="200" fill="#00e5ff" font-family="monospace" font-size="10" opacity="0.6">ALT: 120m</text>
+        <text x="420" y="200" fill="#00e5ff" font-family="monospace" font-size="10" opacity="0.6">SPD: 12m/s</text>
+        <text x="160" y="500" fill="#00e5ff" font-family="monospace" font-size="10" opacity="0.6">GPS: LOCK</text>
+        <text x="410" y="500" fill="#00e5ff" font-family="monospace" font-size="10" opacity="0.6">SIG: 98%</text>
+
+        <!-- Signal lines to labels -->
+        <line x1="220" y1="220" x2="195" y2="206" stroke="#00e5ff" stroke-width="0.5" opacity="0.3"/>
+        <line x1="480" y1="220" x2="490" y2="206" stroke="#00e5ff" stroke-width="0.5" opacity="0.3"/>
+        <line x1="220" y1="480" x2="195" y2="494" stroke="#00e5ff" stroke-width="0.5" opacity="0.3"/>
+        <line x1="480" y1="480" x2="490" y2="494" stroke="#00e5ff" stroke-width="0.5" opacity="0.3"/>
+      </g>
+    </svg>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat reveal">
+    <span class="stat-num">102+</span>
+    <span class="stat-label">CAA Part 102 Certified</span>
+  </div>
+  <div class="stat reveal reveal-delay-1">
+    <span class="stat-num">18%</span>
+    <span class="stat-label">NZ/AU Market CAGR 2025–35</span>
+  </div>
+  <div class="stat reveal reveal-delay-2">
+    <span class="stat-num">$12B</span>
+    <span class="stat-label">NZ Defence Investment (4yr)</span>
+  </div>
+  <div class="stat reveal reveal-delay-3">
+    <span class="stat-num">6+</span>
+    <span class="stat-label">Industry Verticals Served</span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="section-header reveal">
+    <div class="section-num">01 — Core Services</div>
+    <div class="section-title">WHAT WE<br><span class="ghost">DELIVER</span></div>
+  </div>
+
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <span class="service-icon">🛰️</span>
+      <span class="service-tag commercial">Commercial</span>
+      <h3>Aerial Mapping & Topographic Survey</h3>
+      <p>High-resolution orthomosaics, 3D terrain models, and digital elevation maps with centimetre-level accuracy using RTK-enabled platforms and ground control points.</p>
+      <div class="service-num">01</div>
+    </div>
+
+    <div class="service-card reveal reveal-delay-1">
+      <span class="service-icon">📡</span>
+      <span class="service-tag commercial">Commercial</span>
+      <h3>LiDAR Point Cloud & 3D Scanning</h3>
+      <p>Penetrate dense vegetation and complex terrain. Ideal for forestry management, coastal erosion monitoring, mining, and infrastructure corridor surveys.</p>
+      <div class="service-num">02</div>
+    </div>
+
+    <div class="service-card ai-card reveal reveal-delay-2">
+      <span class="service-icon">🤖</span>
+      <span class="service-tag ai-tag">AI-Powered</span>
+      <h3>AI-Driven Data Analysis & Reporting</h3>
+      <p>Our AI co-founder advantage: automated change detection, anomaly identification, predictive modelling, and plain-language insight reports — delivered faster than any competitor.</p>
+      <div class="service-num">03</div>
+    </div>
+
+    <div class="service-card reveal">
+      <span class="service-icon">🌾</span>
+      <span class="service-tag commercial">Agriculture</span>
+      <h3>Precision Agriculture & Multispectral Imaging</h3>
+      <p>NDVI, plant health mapping, irrigation assessment, and yield forecasting across farms, vineyards, and orchards across New Zealand.</p>
+      <div class="service-num">04</div>
+    </div>
+
+    <div class="service-card reveal reveal-delay-1">
+      <span class="service-icon">🏗️</span>
+      <span class="service-tag commercial">Construction</span>
+      <h3>Construction Progress & Volumetric Analysis</h3>
+      <p>Regular site monitoring, cut-and-fill calculations, stockpile volumes, BIM integration, and compliance documentation for civil and building projects.</p>
+      <div class="service-num">05</div>
+    </div>
+
+    <div class="service-card reveal reveal-delay-2">
+      <span class="service-icon">🔍</span>
+      <span class="service-tag commercial">Inspection</span>
+      <h3>Infrastructure & Asset Inspection</h3>
+      <p>Bridges, towers, pipelines, power lines, roofs, and coastal structures — inspected safely, rapidly, and precisely using visual, thermal, and LiDAR payloads.</p>
+      <div class="service-num">06</div>
+    </div>
+
+    <div class="service-card defence-card reveal">
+      <span class="service-icon">🛡️</span>
+      <span class="service-tag defence">Defence-Adjacent</span>
+      <h3>Search & Rescue Support (FENZ / Police)</h3>
+      <p>24/7 on-call emergency response. Thermal imaging for missing persons, flood and fire damage mapping, and crime/crash scene reconstruction.</p>
+      <div class="service-num">07</div>
+    </div>
+
+    <div class="service-card reveal reveal-delay-1">
+      <span class="service-icon">🌿</span>
+      <span class="service-tag govt">Government</span>
+      <h3>Environmental & Conservation Monitoring</h3>
+      <p>DOC, regional councils, and environmental agencies: biodiversity assessment, pest habitat mapping, erosion monitoring, and coastal change tracking.</p>
+      <div class="service-num">08</div>
+    </div>
+
+    <div class="service-card ai-card reveal reveal-delay-2">
+      <span class="service-icon">⚡</span>
+      <span class="service-tag ai-tag">AI-Powered</span>
+      <h3>Drone-as-a-Service & Custom AI Workflows</h3>
+      <p>Tailored automated drone programmes with recurring data capture, AI analytics pipelines, and custom dashboards — turning aerial data into business intelligence.</p>
+      <div class="service-num">09</div>
+    </div>
+  </div>
+</section>
+
+<!-- AI ADVANTAGE -->
+<section class="ai-section" id="ai">
+  <div class="ai-left">
+    <div class="section-num reveal">02 — Our Advantage</div>
+    <div class="section-title reveal">THE AI<br><span class="ghost">EDGE</span></div>
+    <p class="reveal">With an AI specialist co-founder, SKYFORGE is not just a drone operator — we are a <strong style="color:var(--white)">data intelligence company</strong> that happens to fly drones. Our machine learning pipelines transform raw aerial data into decisions.</p>
+
+    <div class="ai-features">
+      <div class="ai-feature reveal">
+        <div class="ai-feature-icon">🧠</div>
+        <div class="ai-feature-text">
+          <h4>Automated Change Detection</h4>
+          <p>AI compares survey datasets over time to automatically flag structural changes, vegetation shifts, or construction deviations — no manual comparison required.</p>
+        </div>
+      </div>
+      <div class="ai-feature reveal reveal-delay-1">
+        <div class="ai-feature-icon">📊</div>
+        <div class="ai-feature-text">
+          <h4>Predictive Analytics & Forecasting</h4>
+          <p>Machine learning models built on your historical aerial data to predict crop yields, erosion risk, structural deterioration, and project timelines.</p>
+        </div>
+      </div>
+      <div class="ai-feature reveal reveal-delay-2">
+        <div class="ai-feature-icon">🎯</div>
+        <div class="ai-feature-text">
+          <h4>Automated Object Detection & Classification</h4>
+          <p>Computer vision to count trees, identify pest species, detect infrastructure defects, and classify land cover — at scale and at speed.</p>
+        </div>
+      </div>
+      <div class="ai-feature reveal reveal-delay-3">
+        <div class="ai-feature-icon">📝</div>
+        <div class="ai-feature-text">
+          <h4>AI-Generated Plain Language Reports</h4>
+          <p>Our models convert complex geospatial data into clear, client-ready reports that non-technical stakeholders can act on immediately.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ai-right reveal">
+    <div class="ai-panel">
+      <div class="panel-label">AI Analysis Engine · Live</div>
+      <div class="data-stream">
+        <div class="data-line"><span class="key">// FLIGHT STATUS</span><span></span></div>
+        <div class="data-line"><span class="key">ALTITUDE</span><span class="val">118.4m</span></div>
+        <div class="data-line"><span class="key">COVERAGE</span><span class="val live">2.4 km²</span></div>
+        <div class="data-line"><span class="key">GSD</span><span class="val">2.1 cm/px</span></div>
+        <div class="data-line"><span class="key">BATTERY</span><span class="val">73%</span></div>
+        <div class="data-line"><span class="key">RTK LOCK</span><span class="val live">ACTIVE</span></div>
+        <div class="data-line"><span class="key">// AI PROCESSING</span><span></span></div>
+        <div class="data-line"><span class="key">POINTS PROCESSED</span><span class="val live">4.2M</span></div>
+        <div class="data-line"><span class="key">OBJECTS DETECTED</span><span class="val">847</span></div>
+        <div class="data-line"><span class="key">ANOMALIES FLAGGED</span><span class="val" style="color:var(--danger)">3</span></div>
+        <div class="data-line"><span class="key">MODEL CONFIDENCE</span><span class="val">97.3%</span></div>
+      </div>
+      <div class="progress-bars">
+        <div class="prog-item">
+          <div class="prog-label"><span>Point Cloud Processing</span><span style="color:var(--acid)">94%</span></div>
+          <div class="prog-bar"><div class="prog-fill" style="width:94%"></div></div>
+        </div>
+        <div class="prog-item">
+          <div class="prog-label"><span>Orthomosaic Generation</span><span style="color:var(--acid)">78%</span></div>
+          <div class="prog-bar"><div class="prog-fill" style="width:78%; animation-delay:0.3s"></div></div>
+        </div>
+        <div class="prog-item">
+          <div class="prog-label"><span>AI Object Classification</span><span style="color:var(--acid)">61%</span></div>
+          <div class="prog-bar"><div class="prog-fill" style="width:61%; animation-delay:0.6s"></div></div>
+        </div>
+        <div class="prog-item">
+          <div class="prog-label"><span>Report Generation</span><span style="color:var(--muted)">Pending</span></div>
+          <div class="prog-bar"><div class="prog-fill" style="width:12%; animation-delay:0.9s; background:var(--muted)"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTORS -->
+<section class="sectors" id="sectors">
+  <div class="section-header reveal">
+    <div class="section-num">03 — Industry Verticals</div>
+    <div class="section-title">SECTORS<br><span class="ghost">WE SERVE</span></div>
+  </div>
+
+  <div class="sectors-grid">
+    <div class="sector-item reveal">
+      <div class="sector-bg">🏗️</div>
+      <div class="sector-overlay"></div>
+      <div class="sector-content">
+        <div class="sector-tag">Vertical 01</div>
+        <h3>Construction & Civil Engineering</h3>
+        <p>Site surveys, progress monitoring, volumetric calculations, and BIM-ready data for NZ's booming infrastructure pipeline.</p>
+      </div>
+    </div>
+
+    <div class="sector-item reveal reveal-delay-1">
+      <div class="sector-bg">🌾</div>
+      <div class="sector-overlay"></div>
+      <div class="sector-content">
+        <div class="sector-tag">Vertical 02</div>
+        <h3>Agriculture & Forestry</h3>
+        <p>Crop health monitoring, yield prediction, precision spraying support, and forest inventory for NZ's primary sector.</p>
+      </div>
+    </div>
+
+    <div class="sector-item reveal">
+      <div class="sector-bg">⚡</div>
+      <div class="sector-overlay"></div>
+      <div class="sector-content">
+        <div class="sector-tag">Vertical 03</div>
+        <h3>Utilities & Infrastructure</h3>
+        <p>Power line inspection, pipeline monitoring, water infrastructure assessment, and national grid corridor surveys for Transpower, Vector, and councils.</p>
+      </div>
+    </div>
+
+    <div class="sector-item reveal reveal-delay-1">
+      <div class="sector-bg">🛡️</div>
+      <div class="sector-overlay"></div>
+      <div class="sector-content">
+        <div class="sector-tag" style="color:var(--danger)">Vertical 04</div>
+        <h3>Government, Defence & Emergency Services</h3>
+        <p>FENZ, NZ Police, DOC, and NZDF-adjacent contracts — from SAR operations and disaster mapping to base facility surveys and environmental compliance.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GOVERNMENT/DEFENCE -->
+<section class="govt-section" id="defence">
+  <div class="section-header reveal">
+    <div class="section-num">04 — Government & Defence</div>
+    <div class="section-title">SERVING<br><span class="ghost">THE STATE</span></div>
+  </div>
+
+  <div class="govt-grid">
+    <div class="govt-card reveal">
+      <span class="govt-icon">🚒</span>
+      <h3>Fire & Emergency NZ</h3>
+      <p>24/7 on-call thermal imaging and aerial reconnaissance for wildfire fronts, flood events, and search-and-rescue operations in remote terrain.</p>
+      <div class="govt-value">→ Retainer contracts available</div>
+    </div>
+
+    <div class="govt-card reveal reveal-delay-1">
+      <span class="govt-icon">🚔</span>
+      <h3>NZ Police</h3>
+      <p>Crime and crash scene reconstruction, suspect surveillance support, and missing persons thermal search across urban and rural environments.</p>
+      <div class="govt-value">→ COMCEN activation ready</div>
+    </div>
+
+    <div class="govt-card reveal reveal-delay-2">
+      <span class="govt-icon">🌿</span>
+      <h3>Dept. of Conservation</h3>
+      <p>Pest habitat mapping, biodiversity surveys, species population monitoring, and protected area condition assessments for DOC and regional councils.</p>
+      <div class="govt-value">→ GETS registered supplier</div>
+    </div>
+
+    <div class="govt-card reveal">
+      <span class="govt-icon">🏛️</span>
+      <h3>Local & Regional Councils</h3>
+      <p>Stormwater infrastructure inspection, roading surveys, reserve management, and emergency response mapping for NZ's 78 councils.</p>
+      <div class="govt-value">→ Panel contract capability</div>
+    </div>
+
+    <div class="govt-card reveal reveal-delay-1">
+      <span class="govt-icon">⚔️</span>
+      <h3>NZDF Support Services</h3>
+      <p>Facility mapping, training ground surveys, disaster relief support, and UAV operator training aligned with the NZDF's $12B capability uplift programme.</p>
+      <div class="govt-value">→ NZDIA member pathway</div>
+    </div>
+
+    <div class="govt-card reveal reveal-delay-2">
+      <span class="govt-icon">🌊</span>
+      <h3>Disaster Response & Resilience</h3>
+      <p>Rapid post-event aerial assessment for cyclone, flood, and earthquake events — building on Cyclone Gabrielle lessons to support NZ's resilience infrastructure.</p>
+      <div class="govt-value">→ 24hr rapid deployment</div>
+    </div>
+  </div>
+</section>
+
+<!-- TECH STACK -->
+<div class="tech-section reveal">
+  <div class="section-num">Technology Stack</div>
+  <div class="tech-scroll">
+    <span class="tech-item">DJI Matrice 350 RTK</span>
+    <span class="tech-item">Zenmuse L2 LiDAR</span>
+    <span class="tech-item">Zenmuse P1 Camera</span>
+    <span class="tech-item">Pix4Dmapper</span>
+    <span class="tech-item">Agisoft Metashape</span>
+    <span class="tech-item">DroneDeploy</span>
+    <span class="tech-item">ArcGIS / QGIS</span>
+    <span class="tech-item">PyTorch / TensorFlow</span>
+    <span class="tech-item">Computer Vision AI</span>
+    <span class="tech-item">RTK / PPK GPS</span>
+    <span class="tech-item">Thermal Imaging</span>
+    <span class="tech-item">Multispectral Sensors</span>
+    <span class="tech-item">AirShare NZ</span>
+    <span class="tech-item">AWS / Azure Cloud</span>
+  </div>
+</div>
+
+<!-- PROCESS -->
+<section class="process" id="process">
+  <div class="section-header reveal">
+    <div class="section-num">05 — Our Process</div>
+    <div class="section-title">HOW IT<br><span class="ghost">WORKS</span></div>
+  </div>
+
+  <div class="process-steps">
+    <div class="step reveal">
+      <div class="step-num">01</div>
+      <h4>Brief & Scope</h4>
+      <p>We define objectives, deliverables, accuracy requirements, and regulatory considerations for your specific project.</p>
+    </div>
+    <div class="step reveal reveal-delay-1">
+      <div class="step-num">02</div>
+      <h4>Flight Planning</h4>
+      <p>AI-optimised flight paths, weather window selection, airspace notification via AirShare, and CAA compliance verification.</p>
+    </div>
+    <div class="step reveal reveal-delay-2">
+      <div class="step-num">03</div>
+      <h4>Data Capture</h4>
+      <p>Precision aerial data collection with RTK GPS, LiDAR, multispectral or thermal payloads — certified and insured.</p>
+    </div>
+    <div class="step reveal reveal-delay-3">
+      <div class="step-num">04</div>
+      <h4>AI Processing</h4>
+      <p>Automated point cloud generation, orthomosaics, 3D models, and AI-driven analysis running in parallel with post-processing.</p>
+    </div>
+    <div class="step reveal reveal-delay-3">
+      <div class="step-num">05</div>
+      <h4>Deliver & Iterate</h4>
+      <p>Client-ready deliverables in your preferred formats — CAD, GIS, PDF reports, dashboards — with ongoing support.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2 class="reveal">
+    READY TO<br>
+    <span class="ghost">TAKE OFF</span>
+  </h2>
+  <p class="reveal">Whether you're a construction firm, farmer, council, or emergency agency — SKYFORGE has the certification, technology, and AI expertise to transform how you see and understand your assets.</p>
+  <div class="cta-btns reveal">
+    <a href="#" class="btn-primary">Request a Proposal</a>
+    <a href="#" class="btn-outline">Download Capabilities Deck</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <a href="#" class="logo">SKY<span>FORGE</span></a>
+    <p>AI-powered drone survey and intelligence services across New Zealand and the Pacific. CAA Part 102 certified operators.</p>
+  </div>
+  <div class="footer-col">
+    <h5>Services</h5>
+    <ul>
+      <li><a href="#">Aerial Mapping</a></li>
+      <li><a href="#">LiDAR Scanning</a></li>
+      <li><a href="#">AI Data Analysis</a></li>
+      <li><a href="#">Precision Agriculture</a></li>
+      <li><a href="#">Infrastructure Inspection</a></li>
+      <li><a href="#">Emergency Response</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h5>Sectors</h5>
+    <ul>
+      <li><a href="#">Construction</a></li>
+      <li><a href="#">Agriculture</a></li>
+      <li><a href="#">Government</a></li>
+      <li><a href="#">Defence-Adjacent</a></li>
+      <li><a href="#">Environment</a></li>
+      <li><a href="#">Utilities</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h5>Company</h5>
+    <ul>
+      <li><a href="#">About SKYFORGE</a></li>
+      <li><a href="#">Our AI Edge</a></li>
+      <li><a href="#">Certifications</a></li>
+      <li><a href="#">Case Studies</a></li>
+      <li><a href="#">Careers</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <p>© 2025 SKYFORGE Ltd. New Zealand. All rights reserved.</p>
+  <div class="cert-badges">
+    <span class="badge">CAA Part 102</span>
+    <span class="badge">NZDIA Member</span>
+    <span class="badge">GETS Registered</span>
+    <span class="badge">ISO 9001</span>
+  </div>
+</div>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const cursorRing = document.getElementById('cursorRing');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+    setTimeout(() => {
+      cursorRing.style.left = e.clientX + 'px';
+      cursorRing.style.top = e.clientY + 'px';
+    }, 80);
+  });
+
+  document.querySelectorAll('a, button, .service-card, .govt-card, .sector-item, .ai-feature').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.width = '20px';
+      cursor.style.height = '20px';
+      cursorRing.style.width = '60px';
+      cursorRing.style.height = '60px';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.width = '12px';
+      cursor.style.height = '12px';
+      cursorRing.style.width = '40px';
+      cursorRing.style.height = '40px';
+    });
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Animated counter
+  function animateCount(el, target, suffix = '') {
+    let current = 0;
+    const step = target / 60;
+    const timer = setInterval(() => {
+      current += step;
+      if (current >= target) {
+        current = target;
+        clearInterval(timer);
+      }
+      el.textContent = Math.floor(current) + suffix;
+    }, 16);
+  }
+
+  // Live data stream simulation
+  function updateLiveData() {
+    const liveEls = document.querySelectorAll('.val.live');
+    const vals = ['2.4 km²', '4.2M', 'ACTIVE'];
+    const ranges = [[2.0, 2.6], [4.0, 4.5], null];
+
+    liveEls.forEach((el, i) => {
+      if (ranges[i]) {
+        const [min, max] = ranges[i];
+        const val = (Math.random() * (max - min) + min).toFixed(1);
+        if (i === 1) el.textContent = val + 'M';
+        else el.textContent = val + ' km²';
+      }
+    });
+  }
+
+  setInterval(updateLiveData, 2000);
+</script>
+</body>
+</html>
