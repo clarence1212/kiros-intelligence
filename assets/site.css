@@ -352,3 +352,45 @@ article.brief .sources li{font-size:14px;line-height:1.5;color:var(--muted)}
 .pf-id b{font-size:14px;letter-spacing:.06em;font-weight:600}
 .pf-id small{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:4px}
 .pf-body{padding-top:18px}
+
+/* Agent Value Ledger */
+.lines4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--ink)}
+.l4{padding:26px 24px 28px 0;border-bottom:1px solid var(--rule)}
+.l4 + .l4{padding-left:24px;border-left:1px solid var(--rule)}
+.l4 .num{font-family:var(--font-mono);font-size:12px;color:var(--signal);letter-spacing:.08em}
+.l4 h3{font-family:var(--font-display);font-size:28px;font-weight:400;margin-top:8px}
+.l4 .sub{display:block;font-size:13.5px;color:var(--accent);font-weight:500;margin-top:4px}
+.l4 p{color:var(--muted);font-size:15px;margin-top:12px}
+@media (max-width:900px){.lines4{grid-template-columns:1fr 1fr}.l4:nth-child(3){padding-left:0;border-left:0}}
+@media (max-width:560px){.lines4{grid-template-columns:1fr}.l4,.l4 + .l4{padding:22px 0;border-left:0}}
+.steps{list-style:none;margin:0;padding:0;border-top:1px solid var(--ink)}
+.steps li{display:grid;grid-template-columns:72px minmax(0,1fr);gap:20px;padding:26px 0;border-bottom:1px solid var(--rule)}
+.steps .sn{font-family:var(--font-display);font-size:34px;font-weight:300;color:var(--accent);line-height:1}
+.steps h3{font-family:var(--font-display);font-size:24px;font-weight:400}
+.steps p{color:var(--muted);margin-top:8px;max-width:72ch}
+.rules5{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
+.ledger{background:var(--surface);border:1px solid var(--rule)}
+.ledger-top{padding:28px 28px 20px;border-bottom:1px solid var(--rule)}
+.ledger .illus{font-family:var(--font-mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--signal)}
+.ledger-top h3{font-family:var(--font-display);font-size:26px;font-weight:400;margin-top:8px}
+.ledger-top p{color:var(--muted);font-size:14.5px;margin-top:8px;max-width:90ch}
+.tscroll{overflow-x:auto}
+.ledger table{width:100%;border-collapse:collapse;font-size:14.5px;min-width:760px}
+.ledger th,.ledger td{text-align:left;vertical-align:top;padding:14px 16px;border-bottom:1px solid var(--rule)}
+.ledger thead th{font-family:var(--font-mono);font-weight:400;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.ledger tbody th{font-weight:600;white-space:nowrap}
+.ledger td{color:var(--muted)}
+.ledger th:first-child,.ledger td:first-child{padding-left:28px}
+.ledger th:last-child,.ledger td:last-child{padding-right:28px}
+.ledger .num-c{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums;color:var(--ink);font-weight:500}
+.ledger .num-c.neg{color:var(--signal)}
+.ledger .num-c.excl{color:var(--muted);font-weight:400;font-style:italic}
+.ledger tfoot th,.ledger tfoot td{border-bottom:0;border-top:2px solid var(--ink);font-family:var(--font-display);font-size:18px;color:var(--ink);font-weight:500}
+.ledger-note{padding:14px 28px 20px;font-size:13px;color:var(--muted);border-top:1px solid var(--rule)}
+.levers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+@media (max-width:900px){.levers{grid-template-columns:1fr}}
+.lv{border-top:2px solid var(--accent);padding-top:18px}
+.lv h3{font-family:var(--font-display);font-size:24px;font-weight:400}
+.lv dl{margin:14px 0 0}
+.lv dt{font-weight:600;font-size:15px;margin-top:14px}
+.lv dd{margin:2px 0 0;color:var(--muted);font-size:14.5px}
