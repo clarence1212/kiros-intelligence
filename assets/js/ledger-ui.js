@@ -63,6 +63,28 @@
       '<line x1="' + pad + '" x2="' + (W - pad) + '" y1="' + y(0).toFixed(1) + '" y2="' + y(0).toFixed(1) + '" class="c-zero"/>' + bars + lbl + '</svg>';
   }
 
+
+  var PIC = { revenue: '<path d="M4 20 L10 13 L14 16 L20 8"/><path d="M15 8 H20 V13"/>', cost: '<circle cx="12" cy="12" r="8"/><path d="M8 12 H16"/>',
+    capital: '<path d="M5 12 a7 7 0 0 1 12-5"/><path d="M17 3 V7 H13"/><path d="M19 12 a7 7 0 0 1 -12 5"/><path d="M7 21 V17 H11"/>', risk: '<path d="M12 3 L19 6 V12 C19 16.5 16 19.5 12 21 C8 19.5 5 16.5 5 12 V6 Z"/><path d="M9 12 L11 14 L15 10"/>' };
+  function pic(k) { return '<svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' + PIC[k] + '</svg>'; }
+  /* Display-only comparisons. They use the same inputs and do not change the ledger calculation in ledger-model.js. */
+  function cmp(aL, a, bL, b) {
+    var m = Math.max(a, b, 1);
+    return '<div class="cmp"><div><span>' + aL + '</span><i style="width:' + (a / m * 100).toFixed(1) + '%"></i><b>' + money(a, true) + '</b></div><div class="s"><span>' + bL + '</span><i style="width:' + (b / m * 100).toFixed(1) + '%"></i><b>' + money(b, true) + '</b></div></div>';
+  }
+  function pillars(r) {
+    var gp = (vals.revScope || 0) * (vals.margin || 0) / 100;
+    var potential = (vals.hours || 0) * (vals.rate || 0);
+    var P = [
+      ['revenue', 'Revenue', r.lines.revenue, 'per year, gross profit', cmp('Baseline gross profit', gp, 'Scenario', gp + r.lines.revenue)],
+      ['cost', 'Operating costs', r.lines.cost, 'per year, captured', cmp('Freed capacity value', potential, 'Counted (redeployed)', r.lines.cost)],
+      ['capital', 'Capital', vals.cash || 0, 'one-off cash release', cmp('Cash released once', vals.cash || 0, 'Annual financing value', r.financing)],
+      ['risk', 'Risk', r.lines.risk, vals.riskOn ? 'per year, included' : 'excluded until evidenced', cmp('Expected reduction', vals.risk || 0, 'Counted', r.lines.risk)]
+    ];
+    return '<div class="lc-pillars">' + P.map(function (x) {
+      return '<div class="lcp lcp-' + x[0] + '"><div class="lcp-h">' + pic(x[0]) + '<h4>' + x[1] + '</h4><span class="tagx">Estimated</span></div><b class="lcp-v">' + money(x[2], true) + '</b><small>' + x[3] + '</small>' + x[4] + '</div>';
+    }).join('') + '</div><p class="k-small">All figures are estimates from the assumptions on the left. Realised results are measured against the baseline after deployment.</p>';
+  }
   function out() {
     var r = LEDGER.compute(vals);
     var pb = r.payback === null ? 'Not within ' + r.years + ' years' : (r.payback < 0.05 ? 'Immediate' : (r.payback * 12).toFixed(0) + ' months');
@@ -75,6 +97,9 @@
       '<div><span>Net present value</span><b' + (r.npv < 0 ? ' class="neg"' : '') + '>' + money(r.npv, true) + '</b><small>Over ' + r.years + ' year' + (r.years > 1 ? 's' : '') + ' at ' + vals.coc + '%</small></div>' +
       '<div><span>Payback</span><b>' + pb + '</b><small>Including implementation cost</small></div>' +
       '<div><span>Total cost of the agent</span><b>' + money(r.totalCost, true) + '</b><small>Implementation plus running cost</small></div></div>' +
+      '<div class="lc-tiles lc-tiles2"><div><span>Gross annual benefit</span><b>' + money(r.annual, true) + '</b><small>Before running cost, full run rate</small></div>' +
+      '<div><span>First-year net result</span><b' + (r.cumList[1].cum < 0 ? ' class="neg"' : '') + '>' + money(r.cumList[1].cum, true) + '</b><small>Year-1 cash flow less implementation</small></div></div>' +
+      pillars(r) +
       chart(r) +
       '<table class="lc-table"><caption>Annual value by line</caption><tbody>' + tbl + '</tbody></table>' +
       '<p class="k-small">One-off working capital released: ' + money(vals.cash) + ' (added once, in year 1). Its financing value of about ' + money(r.financing) + ' a year is shown for reference and not added again.</p>' +

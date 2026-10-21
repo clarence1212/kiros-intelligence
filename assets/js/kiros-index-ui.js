@@ -67,7 +67,7 @@
   }
 
   function radar(r) {
-    var n = r.dims.length, cx = 230, cy = 175, R = 120, pts = [], grid = '', axes = '', labels = '';
+    var n = r.dims.length, cx = 230, cy = 175, R = 110, pts = [], grid = '', axes = '', labels = '';
     function xy(i, v) { var a = (-90 + i * 360 / n) * Math.PI / 180; return [cx + Math.cos(a) * R * v, cy + Math.sin(a) * R * v]; }
     [0.25, 0.5, 0.75, 1].forEach(function (g) {
       var p = []; for (var i = 0; i < n; i++) p.push(xy(i, g).map(function (x) { return x.toFixed(1); }).join(','));
@@ -105,20 +105,36 @@
     var r = KARVI.score(state.answers, cfg);
     var ind = cfg.industries[state.industry];
     var focus = ind && ind.focus.length ? ind.focus.map(function (f) { var p = r.pathways.filter(function (x) { return x.id === f; })[0]; return p ? p.name.toLowerCase() : f; }) : [];
-    var dimRows = r.dims.map(function (d) { return '<tr><th scope="row">' + esc(d.name) + '</th><td>' + Math.round(d.weight * 100) + '%</td><td class="num">' + d.score + '</td></tr>'; }).join('');
+    var ICONS = { revenue: '<path d="M4 20 L10 13 L14 16 L20 8"/><path d="M15 8 H20 V13"/>', cost: '<circle cx="12" cy="12" r="8"/><path d="M8 12 H16"/>',
+      capital: '<path d="M5 12 a7 7 0 0 1 12-5"/><path d="M17 3 V7 H13"/><path d="M19 12 a7 7 0 0 1 -12 5"/><path d="M7 21 V17 H11"/>', risk: '<path d="M12 3 L19 6 V12 C19 16.5 16 19.5 12 21 C8 19.5 5 16.5 5 12 V6 Z"/><path d="M9 12 L11 14 L15 10"/>' };
+    function ic(k) { return '<svg class="ic sm" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' + ICONS[k] + '</svg>'; }
+    var C = 2 * Math.PI * 70, off = C * (1 - r.composite / 100);
+    var gauge = '<svg viewBox="0 0 180 180" class="k-gauge" role="img" aria-label="Composite readiness ' + r.composite + ' out of 100, ' + esc(r.band.name) + '">' +
+      [40, 60, 80].map(function (t) { var a = (-90 + t * 3.6) * Math.PI / 180; return '<line x1="' + (90 + Math.cos(a) * 60).toFixed(1) + '" y1="' + (90 + Math.sin(a) * 60).toFixed(1) + '" x2="' + (90 + Math.cos(a) * 80).toFixed(1) + '" y2="' + (90 + Math.sin(a) * 80).toFixed(1) + '" class="g-tick"/>'; }).join('') +
+      '<circle cx="90" cy="90" r="70" class="g-track"/><circle cx="90" cy="90" r="70" class="g-val" stroke-dasharray="' + C.toFixed(1) + '" stroke-dashoffset="' + off.toFixed(1) + '" transform="rotate(-90 90 90)"/>' +
+      '<text x="90" y="92" text-anchor="middle" class="g-num">' + r.composite + '</text><text x="90" y="116" text-anchor="middle" class="g-of">OUT OF 100</text></svg>';
+    var bandsRow = cfg.bands.map(function (bd) { return '<li class="' + (bd.name === r.band.name ? 'on' : '') + '"><b>' + bd.min + '–' + bd.max + '</b>' + esc(bd.name) + '</li>'; }).join('');
+    var dimBars = r.dims.map(function (d) {
+      return '<li><div class="db-h"><span>' + esc(d.name) + ' <small>' + Math.round(d.weight * 100) + '%</small></span><b>' + d.score + '</b></div><div class="db-t" aria-hidden="true"><i style="width:' + d.score + '%"></i><em style="left:40%"></em><em style="left:60%"></em></div></li>';
+    }).join('');
+    var paths = r.pathways.map(function (p) {
+      var cls = p.score >= 60 ? 'hi' : (p.score >= 40 ? 'mid' : 'lo');
+      return '<div class="kp kp-' + cls + '"><div class="kp-h">' + ic(p.id) + '<h4>' + esc(p.name) + '</h4></div><div class="kp-s"><b>' + p.score + '</b><span>/100</span></div><p class="kp-b">' + esc(p.band) + '</p><div class="db-t" aria-hidden="true"><i style="width:' + p.score + '%"></i><em style="left:40%"></em><em style="left:60%"></em></div><p class="kp-n">' + esc(p.basis) + '</p></div>';
+    }).join('');
+    var weakest = r.dims.slice().sort(function (a, b) { return a.raw - b.raw; }).slice(0, 2);
+    var constraints = r.dims.filter(function (d) { return d.score < 40; });
     var html =
-      '<div class="k-result-head"><div><span class="label">Your indicative result</span><h2 data-focus>Composite AI readiness: <span class="k-score">' + r.composite + '</span><span class="k-of">/100</span></h2>' +
-      '<p class="k-band"><b>' + esc(r.band.name) + '.</b> ' + esc(r.band.text) + '</p></div></div>' +
-      '<div class="k-grid"><div class="k-panel"><h3>Six-dimension profile</h3>' + radar(r) +
-      '<table class="k-table"><caption class="sr-only">Dimension scores</caption><thead><tr><th scope="col">Dimension</th><th scope="col">Weight</th><th scope="col" class="num">Score</th></tr></thead><tbody>' + dimRows + '</tbody></table></div>' +
-      '<div class="k-panel"><h3>Readiness by value pathway</h3><p class="k-small">How ready the organisation is to pursue each Agent Value Ledger category. This is readiness, not a forecast of financial value.</p>' +
-      r.pathways.map(function (p) { return bar(p.name + ' · ' + p.band, p.score, p.basis); }).join('') +
-      '<p class="k-legend"><em></em>Markers at 40 and 60 show where the pathway bands change.</p>' +
-      (focus.length ? '<div class="k-context"><b>In ' + esc(ind.name.toLowerCase()) + '</b>, value from AI most often shows up first in ' + focus.slice(0, -1).join(', ') + ' and ' + focus[focus.length - 1] + '. This is context only and does not change your scores.</div>' : '') +
-      '</div></div>' +
-      '<div class="k-grid k-three"><div class="k-panel"><h3>Principal strengths</h3><ul>' + r.strengths.map(function (d) { return '<li><b>' + esc(d.name) + '</b> (' + d.score + ')</li>'; }).join('') + '</ul></div>' +
-      '<div class="k-panel"><h3>Significant gaps</h3>' + (r.gaps.length ? '<ul>' + r.gaps.map(function (d) { return '<li><b>' + esc(d.name) + '</b> (' + d.score + ')</li>'; }).join('') + '</ul>' : '<p>No dimension scored below 60.</p>') + '</div>' +
-      '<div class="k-panel"><h3>Suggested priority actions</h3><ol>' + r.actions.map(function (a) { return '<li>' + esc(a.text) + '</li>'; }).join('') + '</ol></div></div>' +
+      '<div class="kd-head"><div class="kd-gauge">' + gauge + '</div><div><span class="label">Your indicative result</span><h2 data-focus>Composite AI readiness: ' + esc(r.band.name) + '</h2>' +
+      '<p class="k-band">' + esc(r.band.text) + '</p><ol class="kd-bands" aria-label="Provisional maturity bands">' + bandsRow + '</ol>' +
+      '<p class="k-small">The composite is the weighted average of the six dimension scores. Bands are provisional, not validated benchmarks.</p></div></div>' +
+      '<div class="kd-sec"><h3>Six-dimension readiness profile</h3><div class="kd-two"><ol class="dbars">' + dimBars + '</ol><div>' + radar(r) + '</div></div><p class="k-legend"><em></em>Markers at 40 and 60 show where the bands change. Small figures show each dimension\'s weight.</p></div>' +
+      '<div class="kd-sec"><h3>Agent Value Ledger linkage</h3><p class="k-small">Readiness to pursue each financial value pathway. These are readiness scores, not monetary returns or forecasts.</p><div class="kps">' + paths + '</div>' +
+      (focus.length ? '<div class="k-context"><b>In ' + esc(ind.name.toLowerCase()) + '</b>, value from AI most often shows up first in ' + focus.slice(0, -1).join(', ') + ' and ' + focus[focus.length - 1] + '. This is context only and does not change your scores.</div>' : '') + '</div>' +
+      '<div class="kd-sec"><h3>Strengths and readiness gaps</h3><table class="kd-sum"><tbody>' +
+      '<tr><th scope="row">Strongest dimensions</th><td>' + r.strengths.map(function (d) { return esc(d.name) + ' <b>' + d.score + '</b>'; }).join(' · ') + '</td></tr>' +
+      '<tr><th scope="row">Weakest dimensions</th><td>' + weakest.map(function (d) { return esc(d.name) + ' <b>' + d.score + '</b>'; }).join(' · ') + '</td></tr>' +
+      '<tr><th scope="row">Principal readiness constraints</th><td>' + (constraints.length ? constraints.map(function (d) { return esc(d.name) + ' (below 40)'; }).join(' · ') : (r.gaps.length ? 'No dimension below 40. Gaps below 60: ' + r.gaps.map(function (d) { return esc(d.name); }).join(' · ') : 'No dimension scored below 60.')) + '</td></tr>' +
+      '<tr><th scope="row">Suggested improvement priorities</th><td><ol>' + r.actions.map(function (a) { return '<li>' + esc(a.text) + '</li>'; }).join('') + '</ol></td></tr></tbody></table></div>' +
       '<div class="k-disclaimer" role="note"><b>Please read.</b> These results are indicative. They are based on your self-reported answers, use provisional maturity bands that are not scientifically validated benchmarks, and are not an independently verified organisational audit. Readiness scores are not estimates of return on investment.</div>' +
       '<div class="k-cta"><div><h3>Want a verified view?</h3><p>The Enterprise AI Value Creation Assessment replaces self-reported answers with interviews, evidence review, workflow and financial analysis, and turns the results into a prioritised roadmap.</p></div>' +
       '<div class="k-cta-a"><a class="btn primary" href="enterprise-assessment.html" data-track="karvi_to_assessment">About the full assessment</a><a class="btn ghost" href="contact.html?type=assessment" data-track="karvi_to_contact">Request a conversation</a></div></div>' +
