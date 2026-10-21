@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://kiros-intelligence.com/sitemap.xml
