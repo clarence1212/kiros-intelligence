@@ -95,6 +95,7 @@ window.KARVI_CONFIG = {
   /* Sector context shown with results. Text only: it does not change any score. */
   industries: {
     'financial-services': { name: 'Financial services & investment management', focus: ['cost', 'risk', 'revenue'] },
+    'family-offices': { name: 'Family offices & private wealth', focus: ['cost', 'risk', 'capital'] },
     'professional-services': { name: 'Professional & corporate services', focus: ['revenue', 'cost', 'capital'] },
     'energy': { name: 'Property, facilities & energy', focus: ['cost', 'capital', 'risk'] },
     'healthcare': { name: 'Healthcare & aged care', focus: ['cost', 'revenue', 'risk'] },
