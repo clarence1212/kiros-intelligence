@@ -11,9 +11,9 @@ A static site hosted on GitHub Pages. It has no server, database, cookies or ana
 | `ai-readiness-index.html` | Kiros AI Readiness & Value Index (K-ARVI), interactive |
 | `agent-value-ledger.html` | Agent Value Ledger, with the adjustable calculator |
 | `ai-delegation-map.html` | AI Delegation Map, controls, helper and Singapore guidance references |
-| `services.html`, `services/*.html` | Six advisory services |
+| `services.html`, `services/*.html` | Six advisory services and one delivery service |
 | `enterprise-assessment.html` | Flagship Enterprise AI Value Creation Assessment |
-| `industries.html`, `industries/*.html` | Seven industry pages |
+| `industries.html`, `industries/*.html` | Eight industry pages |
 | `insights.html`, `briefs/*.html` | Research briefs |
 | `about.html`, `people.html`, `capabilities/research.html`, `capabilities/ventures.html` | Firm pages |
 | `contact.html`, `privacy.html` | Enquiry form and privacy notice |
