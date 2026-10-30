@@ -76,3 +76,49 @@
     });
   }
 })();
+
+/* v5: decision sorter, scroll motion and reduced-motion handling for the hero animation. */
+(function () {
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) document.querySelectorAll('.vengine svg').forEach(function (s) { try { s.pauseAnimations(); } catch (e) {} });
+
+  if (!reduce && 'IntersectionObserver' in window) {
+    var els = Array.prototype.slice.call(document.querySelectorAll('main .chapter > .wrap > *'));
+    var io = new IntersectionObserver(function (es) { es.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('rv-in'); en.target.classList.remove('rv-pre'); io.unobserve(en.target); } }); }, { rootMargin: '0px 0px -8% 0px' });
+    els.forEach(function (el) { if (el.getBoundingClientRect().top > window.innerHeight) { el.classList.add('rv-pre'); io.observe(el); } });
+  }
+
+  var ds = document.getElementById('dsort');
+  if (!ds) return;
+  var names = JSON.parse(ds.getAttribute('data-names')), pool = ds.querySelector('.ds-cards'), sel = null, total = ds.querySelectorAll('.ds-card').length;
+  function select(c) { if (sel) sel.setAttribute('aria-pressed', 'false'); sel = (sel === c) ? null : c; if (sel) sel.setAttribute('aria-pressed', 'true'); }
+  function place(card, zone) {
+    var z = zone.getAttribute('data-z'), fb = card.querySelector('.ds-fb');
+    if (!fb) { fb = document.createElement('span'); card.appendChild(fb); }
+    var same = card.getAttribute('data-z') === z;
+    fb.className = 'ds-fb ' + (same ? 'ok' : 'diff');
+    fb.textContent = same ? 'Matches a common starting point' : 'Often starts in ' + names[card.getAttribute('data-z')];
+    zone.querySelector('.ds-drop').appendChild(card);
+    card.setAttribute('aria-pressed', 'false'); sel = null; score();
+  }
+  function score() {
+    var placed = ds.querySelectorAll('.ds-drop .ds-card'), ok = ds.querySelectorAll('.ds-drop .ds-fb.ok').length, left = total - placed.length;
+    ds.querySelector('.ds-score').textContent = left ? (left + ' left to place · ' + ok + ' of ' + placed.length + ' match common starting points.') : ('All placed. ' + ok + ' of ' + total + ' match common starting points. The differences are where a good governance conversation starts.');
+  }
+  ds.querySelectorAll('.ds-card').forEach(function (c) {
+    c.addEventListener('click', function (e) { e.stopPropagation(); select(c); });
+    c.addEventListener('dragstart', function (e) { c.classList.add('dragging'); e.dataTransfer.setData('text/plain', c.id); });
+    c.addEventListener('dragend', function () { c.classList.remove('dragging'); });
+  });
+  ds.querySelectorAll('.ds-zone').forEach(function (z) {
+    z.addEventListener('dragover', function (e) { e.preventDefault(); z.classList.add('over'); });
+    z.addEventListener('dragleave', function () { z.classList.remove('over'); });
+    z.addEventListener('drop', function (e) { e.preventDefault(); z.classList.remove('over'); var c = document.getElementById(e.dataTransfer.getData('text/plain')); if (c) place(c, z); });
+    z.addEventListener('click', function () { if (sel) place(sel, z); });
+    z.addEventListener('keydown', function (e) { if ((e.key === 'Enter' || e.key === ' ') && sel) { e.preventDefault(); place(sel, z); } });
+  });
+  document.getElementById('ds-reset').addEventListener('click', function () {
+    ds.querySelectorAll('.ds-card').forEach(function (c) { var f = c.querySelector('.ds-fb'); if (f) f.remove(); c.setAttribute('aria-pressed', 'false'); pool.appendChild(c); });
+    sel = null; ds.querySelector('.ds-score').textContent = total + ' decisions to place.';
+  });
+})();
